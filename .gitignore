@@ -1,0 +1,45 @@
+# Ignorar pastas virtuais
+venv/
+.venv/
+ENV/
+env/
+
+# Ignorar arquivos de cache e compilação do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignorar arquivos de build e distribuição
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Ignorar logs e saídas
+*.log
+*.out
+*.err
+
+# Ignorar arquivos de ambiente (senhas, tokens etc.)
+.env
+*.env
+
+# Ignorar arquivos de configuração do IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignorar arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar backups e temporários
+*.bak
+*.tmp
+
+# Ignorar testes e cobertura (se usar pytest ou coverage)
+htmlcov/
+.coverage
+.cache/
+.pytest_cache/
