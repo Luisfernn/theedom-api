@@ -1,47 +1,27 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import func
 from app.models.series import Series
+from app.models.series_actors import SeriesActor
 
+def add_actors_to_series(db: Session, series_id: int, actor_names: list[str]) -> None:
+    series = db.query(Series).filter(Series.id == series_id).first()
 
-def get_series_by_title(db: Session, title: str) -> Series | None:
-    normalized_title = title.strip()
+    if not series:
+        raise ValueError("Series not found.")
 
-    return (
-        db.query(Series)
-        .filter(func.lower(Series.title) == func.lower(normalized_title))
-        .first()
-    )
+    for name in actor_names:
+        actor = get_actor_by_name(db, name)
+        if not actor:
+            continue  # Ou criar o ator, dependendo do seu fluxo
 
+        # Verifica se a associação já existe
+        exists = (
+            db.query(SeriesActor)
+            .filter(SeriesActor.series_id == series.id, SeriesActor.actor_id == actor.id)
+            .first()
+        )
 
-def create_series(
-    db: Session,
-    *,
-    title: str,
-    status: str | None = None,
-    production_company: str | None = None,
-    date_start: str | None = None,
-    date_watched: str | None = None,
-) -> Series:
-    """
-    Creates a new Series if it does not already exist.
-    Raises ValueError if a series with the same title already exists.
-    """
+        if not exists:
+            association = SeriesActor(series_id=series.id, actor_id=actor.id)
+            db.add(association)
 
-    existing_series = get_series_by_title(db, title)
-
-    if existing_series:
-        raise ValueError("Series with this title already exists.")
-
-    series = Series(
-        title=title.strip(),
-        status=status,
-        production_company=production_company,
-        date_start=date_start,
-        date_watched=date_watched,
-    )
-
-    db.add(series)
     db.commit()
-    db.refresh(series)
-
-    return series
