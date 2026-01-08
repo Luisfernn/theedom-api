@@ -25,3 +25,7 @@ def add_actors_to_series(db: Session, series_id: int, actor_names: list[str]) ->
             db.add(association)
 
     db.commit()
+
+
+def list_series(db: Session) -> list[Series]:
+    return db.query(Series).order_by(Series.title).all()
