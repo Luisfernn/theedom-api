@@ -75,4 +75,28 @@ def add_actors_to_series_endpoint(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=str(exc),
-        )        
+        ) 
+
+
+@router.post(
+    "/{series_id}/characters",
+    status_code=status.HTTP_200_OK,
+)
+def add_characters_to_series_endpoint(
+    series_id: int,
+    payload: SeriesCharactersAdd,
+    db: Session = Depends(get_db),
+):
+    try:
+        add_characters_to_series(
+            db,
+            series_id=series_id,
+            character_ids=payload.character_ids,
+        )
+        return {"message": "Personagens adicionados com sucesso."}
+
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(exc),
+        )               
