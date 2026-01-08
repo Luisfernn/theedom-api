@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
 from app.models.series import Series
 from app.models.series_actors import SeriesActor
+from sqlalchemy import func
+
 
 def add_actors_to_series(db: Session, series_id: int, actor_names: list[str]) -> None:
     series = db.query(Series).filter(Series.id == series_id).first()
@@ -25,7 +27,3 @@ def add_actors_to_series(db: Session, series_id: int, actor_names: list[str]) ->
             db.add(association)
 
     db.commit()
-
-
-def list_series(db: Session) -> list[Series]:
-    return db.query(Series).order_by(Series.title).all()
