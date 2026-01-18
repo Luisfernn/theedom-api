@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLs Cadastrados</title>
+    <link rel="stylesheet" href="css/bl-list.css">
+</head>
+<body>
+    <header class="page-header">
+        <button class="back-button" onclick="window.location.href='index.html'">
+            <span class="arrow">←</span>
+        </button>
+        <h1 class="page-title">BLs Cadastrados</h1>
+        <div class="spacer"></div>
+    </header>
+
+    <div class="content-container">
+        <div class="search-section">
+            <input 
+                type="text" 
+                id="search-input" 
+                class="search-input" 
+                placeholder="Pesquisar BL pelo título..."
+            >
+        </div>
+
+        <div id="bl-list" class="bl-list">
+            <!-- BLs serão inseridos aqui dinamicamente -->
+        </div>
+
+        <div id="empty-state" class="empty-state" style="display: none;">
+            <div class="empty-icon">📚</div>
+            <p class="empty-message">Nenhum BL cadastrado ainda.</p>
+        </div>
+    </div>
+
+    <script src="js/bl-list.js"></script>
+</body>
+</html>
