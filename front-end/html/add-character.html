@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Personagens</title>
+    <link rel="stylesheet" href="css/add-character.css">
+</head>
+<body>
+    <header class="page-header">
+        <button class="back-button" onclick="window.history.back()">
+            <span class="arrow">←</span>
+        </button>
+        <div class="header-content">
+            <h1 class="page-title">Adicionar Personagens</h1>
+            <p class="page-subtitle">Adicione um ou mais personagens para vincular a este BL</p>
+        </div>
+        <div class="spacer"></div>
+    </header>
+
+    <div class="content-container">
+        <!-- BL Atual -->
+        <div class="bl-info-banner">
+            <span class="banner-label">BL:</span>
+            <span class="banner-value" id="current-bl">Love in the Moonlight</span>
+        </div>
+
+        <!-- Mensagens de Feedback -->
+        <div id="success-message" class="message success-message" style="display: none;">
+            <span class="message-icon">✓</span>
+            <span class="message-text"></span>
+        </div>
+
+        <div id="error-message" class="message error-message" style="display: none;">
+            <span class="message-icon">✕</span>
+            <span class="message-text"></span>
+        </div>
+
+        <!-- Formulário -->
+        <form id="add-character-form" class="character-form">
+            <div id="characters-container">
+                <!-- Personagem 1 (inicial) -->
+                <div class="character-section" id="character-section-1">
+                    <div class="character-header">
+                        <h3 class="character-title">Personagem 1</h3>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="character-name-1">Nome do Personagem</label>
+                        <input 
+                            type="text" 
+                            id="character-name-1" 
+                            name="character-name-1" 
+                            class="form-input"
+                            placeholder="Ex: Phaya"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="actor-name-1">Ator/Atriz</label>
+                        <input 
+                            type="text" 
+                            id="actor-name-1" 
+                            name="actor-name-1" 
+                            class="form-input"
+                            placeholder="Nome do ator ou atriz"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role-type-1">Tipo de Papel</label>
+                        <select 
+                            id="role-type-1" 
+                            name="role-type-1" 
+                            class="form-select"
+                            required
+                        >
+                            <option value="">Selecione...</option>
+                            <option value="main">Main Role</option>
+                            <option value="support">Support Role</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="add-character-button" onclick="addCharacterSection()">
+                <span class="add-icon">+</span>
+                Adicionar mais um personagem
+            </button>
+
+            <div class="form-actions">
+                <button type="button" class="cancel-button" onclick="window.history.back()">
+                    Cancelar
+                </button>
+                <button type="submit" class="submit-button">
+                    Adicionar personagens
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="js/add-character.js"></script>
+</body>
+</html>
