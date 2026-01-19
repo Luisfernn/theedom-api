@@ -1,28 +1,35 @@
-// Dados de exemplo do BL
-const blData = {
-    id: 1,
-    name: "Love in the Moonlight"
-};
+// Obter BL ID da URL
+const urlParams = new URLSearchParams(window.location.search);
+const blId = urlParams.get('blId');
+
+if (!blId) {
+    alert('BL não informado');
+    window.history.back();
+}
 
 let characterCount = 1; // Começamos com 1 personagem
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Carregar nome do BL
-    document.getElementById('current-bl').textContent = blData.name;
-    
-    // Configurar formulário
+document.addEventListener('DOMContentLoaded', function () {
+    // ⚠️ Nome do BL depois deve vir do backend
+    const blNameEl = document.getElementById('current-bl');
+    if (blNameEl) {
+        blNameEl.textContent = `BL #${blId}`;
+    }
+
     const form = document.getElementById('add-character-form');
-    form.addEventListener('submit', handleSubmit);
+    if (form) {
+        form.addEventListener('submit', handleSubmit);
+    }
 });
 
 function addCharacterSection() {
     characterCount++;
     const charactersContainer = document.getElementById('characters-container');
-    
+
     const characterSection = document.createElement('div');
     characterSection.className = 'character-section';
     characterSection.id = `character-section-${characterCount}`;
-    
+
     characterSection.innerHTML = `
         <div class="character-header">
             <h3 class="character-title">Personagem ${characterCount}</h3>
@@ -30,36 +37,31 @@ function addCharacterSection() {
                 × Remover
             </button>
         </div>
-        
+
         <div class="form-group">
             <label for="character-name-${characterCount}">Nome do Personagem</label>
-            <input 
-                type="text" 
-                id="character-name-${characterCount}" 
-                name="character-name-${characterCount}" 
+            <input
+                type="text"
+                id="character-name-${characterCount}"
                 class="form-input"
-                placeholder="Ex: Phaya"
                 required
             >
         </div>
 
         <div class="form-group">
             <label for="actor-name-${characterCount}">Ator/Atriz</label>
-            <input 
-                type="text" 
-                id="actor-name-${characterCount}" 
-                name="actor-name-${characterCount}" 
+            <input
+                type="text"
+                id="actor-name-${characterCount}"
                 class="form-input"
-                placeholder="Nome do ator ou atriz"
                 required
             >
         </div>
 
         <div class="form-group">
             <label for="role-type-${characterCount}">Tipo de Papel</label>
-            <select 
-                id="role-type-${characterCount}" 
-                name="role-type-${characterCount}" 
+            <select
+                id="role-type-${characterCount}"
                 class="form-select"
                 required
             >
@@ -69,88 +71,67 @@ function addCharacterSection() {
             </select>
         </div>
     `;
-    
+
     charactersContainer.appendChild(characterSection);
 }
 
 function removeCharacterSection(characterNumber) {
-    const characterSection = document.getElementById(`character-section-${characterNumber}`);
-    if (characterSection) {
-        characterSection.remove();
-    }
+    const section = document.getElementById(`character-section-${characterNumber}`);
+    if (section) section.remove();
 }
 
 function handleSubmit(e) {
     e.preventDefault();
-    
+
     const characters = [];
-    
+
     for (let i = 1; i <= characterCount; i++) {
-        const characterSection = document.getElementById(`character-section-${i}`);
-        if (!characterSection) continue;
-        
-        const characterName = document.getElementById(`character-name-${i}`);
-        const actorName = document.getElementById(`actor-name-${i}`);
-        const roleType = document.getElementById(`role-type-${i}`);
-        
-        if (characterName && actorName && roleType) {
-            const characterData = {
-                characterName: characterName.value.trim(),
-                actorName: actorName.value.trim(),
-                roleType: roleType.value
-            };
-            
-            if (characterData.characterName && characterData.actorName && characterData.roleType) {
-                characters.push(characterData);
-            }
+        const section = document.getElementById(`character-section-${i}`);
+        if (!section) continue;
+
+        const name = document.getElementById(`character-name-${i}`)?.value.trim();
+        const actor = document.getElementById(`actor-name-${i}`)?.value.trim();
+        const role = document.getElementById(`role-type-${i}`)?.value;
+
+        if (name && actor && role) {
+            characters.push({ name, actor, role });
         }
     }
-    
+
     if (characters.length === 0) {
-        showMessage('error', 'Por favor, preencha pelo menos um personagem completo.');
+        showMessage('error', 'Preencha pelo menos um personagem completo.');
         return;
     }
-    
+
     const requestData = {
-        blId: blData.id,
-        characters: characters
+        blId: Number(blId),
+        characters
     };
-    
-    // Simulação de sucesso
-    console.log('Dados dos personagens:', requestData);
-    const charactersText =
-        characters.length === 1
-            ? '1 personagem foi adicionado'
-            : `${characters.length} personagens foram adicionados`;
-            
-    showMessage('success', `✓ ${charactersText} com sucesso!`);
-    
-    // Limpar formulário
+
+    console.log('Payload:', requestData);
+
+    showMessage(
+        'success',
+        `${characters.length} personagem(ns) adicionado(s) com sucesso!`
+    );
+
     document.getElementById('characters-container').innerHTML = '';
     characterCount = 0;
     addCharacterSection();
 }
 
 function showMessage(type, text) {
-    const successMessage = document.getElementById('success-message');
-    const errorMessage = document.getElementById('error-message');
-    
-    successMessage.style.display = 'none';
-    errorMessage.style.display = 'none';
-    
-    if (type === 'success') {
-        successMessage.querySelector('.message-text').textContent = text;
-        successMessage.style.display = 'flex';
-        
-        setTimeout(() => {
-            successMessage.style.display = 'none';
-        }, 5000);
-    } else if (type === 'error') {
-        errorMessage.querySelector('.message-text').textContent = text;
-        errorMessage.style.display = 'flex';
-        
-        setTimeout(() => {
-            errorMessage.style.display = 'none';
-        }, 5000);
-    }
+    const success = document.getElementById('success-message');
+    const error = document.getElementById('error-message');
+
+    success.style.display = 'none';
+    error.style.display = 'none';
+
+    const target = type === 'success' ? success : error;
+    target.querySelector('.message-text').textContent = text;
+    target.style.display = 'flex';
+
+    setTimeout(() => {
+        target.style.display = 'none';
+    }, 5000);
 }
