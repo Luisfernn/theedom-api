@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Ator ao BL</title>
-    <link rel="stylesheet" href="../css/add-actor-to-bl.css">
+    <link rel="stylesheet" href="css/add-actor-to-bl.css">
 </head>
 <body>
     <header class="page-header">
@@ -13,7 +13,7 @@
         </button>
         <div class="header-content">
             <h1 class="page-title">Adicionar Ator ao BL</h1>
-            <p class="page-subtitle">Selecione um ator já cadastrado para vincular a este BL</p>
+            <p class="page-subtitle">Digite o nome do ator para vincular a este BL</p>
         </div>
         <div class="spacer"></div>
     </header>
@@ -22,48 +22,43 @@
         <!-- BL Atual -->
         <div class="bl-info-banner">
             <span class="banner-label">BL:</span>
-            <span class="banner-value" id="current-bl">Love in the Moonlight</span>
-        </div>
-
-        <!-- Campo de Busca -->
-        <div class="search-section">
-            <input 
-                type="text" 
-                id="search-input" 
-                class="search-input" 
-                placeholder="Buscar ator pelo nome"
-            >
+            <span class="banner-value" id="current_bl">Love in the Moonlight</span>
         </div>
 
         <!-- Mensagens de Feedback -->
-        <div id="success-message" class="message success-message" style="display: none;">
+        <div id="success_message" class="message success-message" style="display: none;">
             <span class="message-icon">✓</span>
             <span class="message-text"></span>
         </div>
 
-        <div id="error-message" class="message error-message" style="display: none;">
+        <div id="error_message" class="message error-message" style="display: none;">
             <span class="message-icon">✕</span>
             <span class="message-text"></span>
         </div>
 
-        <!-- Lista de Atores -->
-        <div class="actors-section">
-            <div id="actors-list" class="actors-list">
-                <!-- Atores serão inseridos aqui -->
+        <!-- Formulário -->
+        <form id="add_actor_form" class="actor-form">
+            <div class="form-group">
+                <label for="actor_name">Nome do Ator</label>
+                <input 
+                    type="text" 
+                    id="actor_name" 
+                    name="actor_name"
+                    class="form-input"
+                    placeholder="Digite o nome do ator"
+                    required
+                >
             </div>
 
-            <div id="empty-state" class="empty-state" style="display: none;">
-                <div class="empty-icon">🔍</div>
-                <p class="empty-message">Nenhum ator encontrado.</p>
+            <div class="form-actions">
+                <button type="button" class="cancel-button" onclick="window.history.back()">
+                    Cancelar
+                </button>
+                <button type="submit" class="submit-button">
+                    Adicionar Ator
+                </button>
             </div>
-        </div>
-
-        <!-- Botão Cancelar -->
-        <div class="actions-section">
-            <button class="cancel-button" onclick="window.history.back()">
-                Cancelar
-            </button>
-        </div>
+        </form>
     </div>
 
     <script src="js/add-actor-to-bl.js"></script>
