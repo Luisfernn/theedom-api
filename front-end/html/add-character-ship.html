@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Ship de Personagens</title>
+    <link rel="stylesheet" href="css/add-character-ship.css">
+</head>
+<body>
+    <header class="page-header">
+        <button class="back-button" onclick="window.history.back()">
+            <span class="arrow">←</span>
+        </button>
+        <div class="header-content">
+            <h1 class="page-title">Adicionar Ship de Personagens</h1>
+            <p class="page-subtitle">Adicione um ou mais ships para vincular a este BL</p>
+        </div>
+        <div class="spacer"></div>
+    </header>
+
+    <div class="content-container">
+        <!-- BL Atual -->
+        <div class="bl-info-banner">
+            <span class="banner-label">BL:</span>
+            <span class="banner-value" id="current-bl">Love in the Moonlight</span>
+        </div>
+
+        <!-- Mensagens de Feedback -->
+        <div id="success-message" class="message success-message" style="display: none;">
+            <span class="message-icon">✓</span>
+            <span class="message-text"></span>
+        </div>
+
+        <div id="error-message" class="message error-message" style="display: none;">
+            <span class="message-icon">✕</span>
+            <span class="message-text"></span>
+        </div>
+
+        <!-- Formulário -->
+        <form id="add-ship-form" class="ship-form">
+            <div id="ships-container">
+                <!-- Ship 1 (inicial) -->
+                <div class="ship-section" id="ship-section-1">
+                    <div class="ship-header">
+                        <h3 class="ship-title">Ship 1</h3>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ship-name-1">Nome do Ship</label>
+                        <input 
+                            type="text" 
+                            id="ship-name-1" 
+                            name="ship-name-1" 
+                            class="form-input"
+                            placeholder="Ex: PhayaTharn"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="character-1-1">Personagem 1</label>
+                        <input 
+                            type="text" 
+                            id="character-1-1" 
+                            name="character-1-1" 
+                            class="form-input"
+                            placeholder="Nome do primeiro personagem"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="character-2-1">Personagem 2</label>
+                        <input 
+                            type="text" 
+                            id="character-2-1" 
+                            name="character-2-1" 
+                            class="form-input"
+                            placeholder="Nome do segundo personagem"
+                            required
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="add-ship-button" onclick="addShipSection()">
+                <span class="add-icon">+</span>
+                Adicionar mais um ship
+            </button>
+
+            <div class="form-actions">
+                <button type="button" class="cancel-button" onclick="window.history.back()">
+                    Cancelar
+                </button>
+                <button type="submit" class="submit-button">
+                    Adicionar ships à série
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="js/add-character-ship.js"></script>
+</body>
