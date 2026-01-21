@@ -41,6 +41,7 @@ function getMockBlData(blId) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    requireAuth();
     loadBlDetails();
 });
 

@@ -11,6 +11,7 @@ if (!blId) {
 let shipCount = 1;
 
 document.addEventListener('DOMContentLoaded', function () {
+    requireAuth();
     // Mostrar nome do BL (se vier pela URL)
     if (blName) {
         document.getElementById('current-bl').textContent = blName;

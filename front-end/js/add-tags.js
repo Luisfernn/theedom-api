@@ -20,6 +20,7 @@ const existingTags = [
 let newTagFieldCount = 1;
 
 document.addEventListener('DOMContentLoaded', function () {
+    requireAuth();
     document.getElementById('current-bl').textContent = blName;
     renderExistingTags();
 

@@ -2,6 +2,7 @@ let allBls = [];
 let currentBls = [];
 
 document.addEventListener('DOMContentLoaded', function () {
+    requireAuth();
     const searchInput = document.getElementById('search-input');
 
     loadBls();

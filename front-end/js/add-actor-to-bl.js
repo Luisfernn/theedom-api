@@ -10,6 +10,7 @@ if (!blId) {
 let messageTimeout = null;
 
 document.addEventListener('DOMContentLoaded', () => {
+    requireAuth();
     const blNameEl = document.getElementById('current-bl');
     const form = document.getElementById('add-actor-form');
 

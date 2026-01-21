@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    requireAuth();
     const addBlCard = document.querySelector('.add-bl');
     const viewArchiveCard = document.querySelector('.view-archive');
 

@@ -13,6 +13,7 @@ const blName = "Love in the Moonlight";
 let shipCount = 1;
 
 document.addEventListener('DOMContentLoaded', function () {
+    requireAuth();
     document.getElementById('current-bl').textContent = blName;
 
     const form = document.getElementById('add-ship-form');

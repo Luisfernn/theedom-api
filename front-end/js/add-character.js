@@ -10,6 +10,7 @@ if (!blId) {
 let characterCount = 1; // Começamos com 1 personagem
 
 document.addEventListener('DOMContentLoaded', function () {
+    requireAuth();
     // ⚠️ Nome do BL depois deve vir do backend
     const blNameEl = document.getElementById('current-bl');
     if (blNameEl) {

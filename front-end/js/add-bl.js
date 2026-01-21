@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+    requireAuth();
     const form = document.getElementById('add-bl-form');
 
     form.addEventListener('submit', async function (e) {
