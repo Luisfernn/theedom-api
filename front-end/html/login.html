@@ -3,64 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="../css/login.css">
+    <title>Login - BL Archive</title>
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-    <!-- Container principal com imagem de fundo -->
     <div class="login-container">
-        <!-- Overlay escuro para legibilidade -->
         <div class="overlay"></div>
-        
-        <!-- Conteúdo central -->
+
         <div class="content-wrapper">
-            <!-- Branding -->
             <div class="branding">
                 <h1 class="site-title">BL</h1>
                 <p class="site-tagline">Seu banco pessoal de Boys Love</p>
             </div>
-            
-            <!-- Card de Login -->
+
             <div class="login-card">
                 <h2 class="login-title">Bem-vindo de volta</h2>
-                
-                <!-- Mensagens de feedback -->
-                <div id="error-message" class="message error-message" style="display: none;">
+
+                <div id="error-message" class="message error-message" aria-live="assertive" style="display: none;">
                     <span class="message-icon">✕</span>
                     <span class="message-text"></span>
                 </div>
-                
-                <div id="success-message" class="message success-message" style="display: none;">
+
+                <div id="success-message" class="message success-message" aria-live="polite" style="display: none;">
                     <span class="message-icon">✓</span>
                     <span class="message-text"></span>
                 </div>
-                
-                <!-- Formulário -->
-                <form id="login-form" class="login-form">
+
+                <form id="login-form" class="login-form" novalidate>
                     <div class="form-group">
                         <label for="login">Login</label>
-                        <input 
-                            type="text" 
-                            id="login" 
-                            name="login" 
+                        <input
+                            type="text"
+                            id="login"
+                            name="login"
                             class="form-input"
                             placeholder="Digite seu login"
+                            autocomplete="username"
                             required
                         >
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="password">Senha</label>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password" 
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
                             class="form-input"
                             placeholder="Digite sua senha"
+                            autocomplete="current-password"
                             required
                         >
                     </div>
-                    
+
                     <button type="submit" class="submit-button">
                         <span class="button-text">Entrar</span>
                         <span class="button-icon">→</span>
@@ -69,7 +64,7 @@
             </div>
         </div>
     </div>
-    
+
     <script src="js/login.js"></script>
 </body>
 </html>
