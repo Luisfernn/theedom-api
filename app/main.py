@@ -8,6 +8,7 @@ app = FastAPI()
 
 app.include_router(series_router)
 app.include_router(tags_router)
+app.include_router(auth.router)
 
 
 @app.get("/health")
