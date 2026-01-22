@@ -15,7 +15,7 @@ class LoginRequest(BaseModel):
 def login(data: LoginRequest):
     # Credenciais fixas (apenas você)
     VALID_LOGIN = "Thee"
-    HASHED_PASSWORD = "$2b$12$KIX9rPpE1eZ7m9rQ2Z7D1O8xZxk7JjXQqM0k2QXjUQ1M3JqE4pKXK"
+    HASHED_PASSWORD = "$2b$12$yWnFQ8Z9jmmY/R86hLs.pOp5Dll1Y9sqDzA8IaHICelZUzwvm2Ppq"
     # ↑ hash de exemplo (senha real você decide)
 
     if data.login != VALID_LOGIN:
