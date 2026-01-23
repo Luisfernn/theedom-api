@@ -1,13 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Response
 from pydantic import BaseModel
-from uuid import uuid4
-
-from app.services.auth_service import authenticate_user
+from app.core.security import verify_password
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
-
-# Armazenamento simples em memória
-ACTIVE_TOKENS: set[str] = set()
 
 
 class LoginRequest(BaseModel):
@@ -15,22 +10,23 @@ class LoginRequest(BaseModel):
     password: str
 
 
-class LoginResponse(BaseModel):
-    access_token: str
-    token_type: str = "simple"
+@router.post("/login")
+def login(data: LoginRequest, response: Response):
+    VALID_LOGIN = "Thee"
+    HASHED_PASSWORD = "$2b$12$yWnFQ8Z9jmmY/R86hLs.pOp5Dll1Y9sqDzA8IaHICelZUzwvm2Ppq"
 
+    if data.login != VALID_LOGIN:
+        raise HTTPException(status_code=401, detail="Login inválido")
 
-@router.post("/login", response_model=LoginResponse)
-def login(data: LoginRequest):
-    is_valid = authenticate_user(data.login, data.password)
+    if not verify_password(data.password, HASHED_PASSWORD):
+        raise HTTPException(status_code=401, detail="Senha inválida")
 
-    if not is_valid:
-        raise HTTPException(status_code=401, detail="Credenciais inválidas")
+    # ✅ Cookie simples de sessão
+    response.set_cookie(
+        key="session",
+        value="authenticated",
+        httponly=True,
+        samesite="lax"
+    )
 
-    token = str(uuid4())
-    ACTIVE_TOKENS.add(token)
-
-    return {
-        "access_token": token,
-        "token_type": "simple"
-    }
+    return {"message": "Login realizado com sucesso"}
