@@ -1,5 +1,6 @@
-from fastapi import APIRouter, HTTPException, Response
+from fastapi import APIRouter, HTTPException, Response, Request
 from pydantic import BaseModel
+
 from app.core.security import verify_password
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
@@ -16,12 +17,11 @@ def login(data: LoginRequest, response: Response):
     HASHED_PASSWORD = "$2b$12$yWnFQ8Z9jmmY/R86hLs.pOp5Dll1Y9sqDzA8IaHICelZUzwvm2Ppq"
 
     if data.login != VALID_LOGIN:
-        raise HTTPException(status_code=401, detail="Login inválido")
+        raise HTTPException(status_code=401, detail="Credenciais inválidas")
 
     if not verify_password(data.password, HASHED_PASSWORD):
-        raise HTTPException(status_code=401, detail="Senha inválida")
+        raise HTTPException(status_code=401, detail="Credenciais inválidas")
 
-    # ✅ Cookie simples de sessão
     response.set_cookie(
         key="session",
         value="authenticated",
