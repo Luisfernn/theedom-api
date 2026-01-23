@@ -31,6 +31,7 @@ def login(data: LoginRequest, response: Response):
 
     return {"message": "Login realizado com sucesso"}
 
+
 @router.get("/me")
 def check_session(request: Request):
     session = request.cookies.get("session")
@@ -39,3 +40,9 @@ def check_session(request: Request):
         raise HTTPException(status_code=401, detail="Não autenticado")
 
     return {"authenticated": True}    
+
+
+@router.post("/logout")
+def logout(response: Response):
+    response.delete_cookie(key="session")
+    return {"message": "Logout realizado com sucesso"}    
