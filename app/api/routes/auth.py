@@ -30,3 +30,12 @@ def login(data: LoginRequest, response: Response):
     )
 
     return {"message": "Login realizado com sucesso"}
+
+@router.get("/me")
+def check_session(request: Request):
+    session = request.cookies.get("session")
+
+    if session != "authenticated":
+        raise HTTPException(status_code=401, detail="Não autenticado")
+
+    return {"authenticated": True}    
