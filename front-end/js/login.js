@@ -48,3 +48,11 @@ async function handleLoginSubmit(event) {
         showMessage("error", error.message);
     }
 }
+
+function clearMessages() {
+    const messageBox = document.getElementById("message");
+    if (messageBox) {
+        messageBox.textContent = "";
+        messageBox.className = "";
+    }
+}
