@@ -1,7 +1,25 @@
 from sqlalchemy.orm import Session
 from app.models.series import Series
+from app.schemas.series import SeriesCreate
 from app.models.series_actors import SeriesActor
 from sqlalchemy import func
+
+def create_series(db: Session, series: SeriesCreate):
+    db_series = Series(
+        title=series.title,
+        country=series.country,
+        status=series.status,
+        production_company=series.production_company,
+        date_start=series.date_start,
+        date_watched=series.date_watched,
+    )
+
+    db.add(db_series)
+    db.commit()
+    db.refresh(db_series)
+
+    return db_series
+
 
 
 def add_actors_to_series(db: Session, series_id: int, actor_names: list[str]) -> None:
