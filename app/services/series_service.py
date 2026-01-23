@@ -20,6 +20,9 @@ def create_series(db: Session, series: SeriesCreate):
 
     return db_series
 
+def get_series_by_title(db: Session, title: str):
+    return db.query(Series).filter(Series.title == title).first()    
+
 
 
 def add_actors_to_series(db: Session, series_id: int, actor_names: list[str]) -> None:
