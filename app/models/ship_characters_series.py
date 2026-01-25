@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Integer, ForeignKey
-from sqlalchemy.orm import relationship
 from app.models.base import Base
 
 
@@ -25,8 +24,3 @@ class ShipCharacterSeries(Base):
         ForeignKey("characters.id", ondelete="CASCADE"),
         nullable=False
     )
-
-    # 🔗 Relationships
-    series = relationship("Series", back_populates="ships")
-    character_1 = relationship("Character", foreign_keys=[character_1_id])
-    character_2 = relationship("Character", foreign_keys=[character_2_id])
