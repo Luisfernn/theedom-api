@@ -9,6 +9,12 @@ def create_series(db: Session, series: SeriesCreate):
     db_series = Series(
         title=series.title,
         country=series.country,
+        release_date=series.release_date,
+        episode_number=series.episode_number,
+        genre=series.genre,
+        synopsis=series.synopsis,
+        platform=series.platform,
+        rate=series.rate,
         status=series.status,
         production_company=series.production_company,
         date_start=series.date_start,
