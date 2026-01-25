@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Integer, ForeignKey, String
-from sqlalchemy.orm import relationship
 from app.models.base import Base
 
 
@@ -12,6 +11,3 @@ class SeriesCharacter(Base):
     actor_id = Column(Integer, ForeignKey("actors.id"), nullable=False)
 
     character_name = Column(String, nullable=False)
-
-    series = relationship("Series", back_populates="characters")
-    actor = relationship("Actor", back_populates="characters")
