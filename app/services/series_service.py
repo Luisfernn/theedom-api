@@ -3,6 +3,7 @@ from app.models.series import Series
 from app.schemas.series import SeriesCreate
 from app.models.series_actors import SeriesActor
 from sqlalchemy import func
+from app.services.actor_service import get_actor_by_name
 
 def create_series(db: Session, series: SeriesCreate):
     db_series = Series(

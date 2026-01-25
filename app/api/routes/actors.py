@@ -17,4 +17,10 @@ def create_actor_endpoint(
     actor_in: ActorCreate,
     db: Session = Depends(get_db),
 ):
-    return create_actor(db, name=actor_in.name)
+    return create_actor(
+        db,
+        name=actor_in.name,
+        nickname=actor_in.nickname,
+        nationality=actor_in.nationality,
+        gender=actor_in.gender
+    )

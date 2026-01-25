@@ -1,3 +1,13 @@
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+
+from app.core.database import get_db
+from app.schemas.characters import CharacterCreate, CharacterResponse
+from app.services.character_service import create_character
+
+router = APIRouter(prefix="/characters", tags=["Characters"])
+
+
 @router.post(
     "",
     response_model=CharacterResponse,

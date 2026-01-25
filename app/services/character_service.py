@@ -1,3 +1,9 @@
+from sqlalchemy.orm import Session
+
+from app.models.characters import Character
+from app.models.series import Series
+
+
 def create_character(
     db: Session,
     *,

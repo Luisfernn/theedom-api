@@ -5,7 +5,7 @@ from app.core.database import get_db
 from fastapi import Query
 from typing import List
 from app.schemas.series import SeriesCreate, SeriesResponse
-from app.services.series_service import create_series
+from app.services.series_service import create_series, list_series
 from app.services.series_tag_service import add_tags_to_series
 from app.schemas.series_tags import SeriesTagsAdd
 from app.schemas.series_actors import SeriesActorsAdd
@@ -131,10 +131,10 @@ def add_ship_actors_to_series_endpoint(
     db: Session = Depends(get_db),
 ):
     try:
-        add_ship_to_series(
+        add_ship_actor_to_series(
             db,
             series_id=series_id,
-            ship_id=payload.ship_id,
+            ship_actor_id=payload.ship_id,
         )
         return {"message": "Ship de atores associado à série com sucesso."}
 

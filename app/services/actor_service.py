@@ -14,7 +14,14 @@ def get_actor_by_name(db: Session, name: str) -> Actor | None:
     )
 
 
-def create_actor(db: Session, *, name: str) -> Actor:
+def create_actor(
+    db: Session,
+    *,
+    name: str,
+    nickname: str,
+    nationality: str,
+    gender: str
+) -> Actor:
     """
     Creates an actor if it does not exist.
     Returns the existing actor otherwise.
@@ -24,7 +31,12 @@ def create_actor(db: Session, *, name: str) -> Actor:
     if existing_actor:
         return existing_actor
 
-    actor = Actor(name=name.strip())
+    actor = Actor(
+        name=name.strip(),
+        nickname=nickname.strip(),
+        nationality=nationality.strip(),
+        gender=gender.strip()
+    )
     db.add(actor)
     db.commit()
     db.refresh(actor)

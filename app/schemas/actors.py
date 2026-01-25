@@ -3,6 +3,9 @@ from pydantic import BaseModel
 
 class ActorBase(BaseModel):
     name: str
+    nickname: str
+    nationality: str
+    gender: str
 
 
 class ActorCreate(ActorBase):
