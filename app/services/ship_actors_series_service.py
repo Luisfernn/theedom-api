@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 
 from app.models.series import Series
 from app.models.ship_actors import ShipActor
-from app.models.ship_actors_series import ShipActorsSeries
+from app.models.ship_actors_series import ShipActorSeries
 
 def add_ship_actor_to_series(
     db: Session,
