@@ -76,12 +76,12 @@ def add_actors_to_series(db: Session, series_id: int, actor_names: list[str]) ->
     series = db.query(Series).filter(Series.id == series_id).first()
 
     if not series:
-        raise ValueError("Series not found.")
+        raise ValueError(f"Series with id {series_id} not found. Please verify the series exists.")
 
     for name in actor_names:
         actor = get_actor_by_name(db, name)
         if not actor:
-            continue  # Ou criar o ator, dependendo do seu fluxo
+            raise ValueError(f"Actor with name '{name}' not found. Please verify the actor exists.")
 
         # Verifica se a associação já existe
         exists = (

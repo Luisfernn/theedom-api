@@ -13,7 +13,7 @@ def add_tags_to_series(
     series = get_series_by_title(db, series_title)
 
     if not series:
-        raise ValueError("Series not found.")
+        raise ValueError(f"Series with title '{series_title}' not found. Please verify the series exists.")
 
     for name in tag_names:
         tag = get_tag_by_name(db, name)

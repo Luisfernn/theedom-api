@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 from typing import Optional, Literal, List
 from datetime import date
 from decimal import Decimal
@@ -23,6 +23,16 @@ class SeriesBase(BaseModel):
     production_company: Optional[str] = Field(None, example="GMMTV")
     date_start: Optional[date] = Field(None, example="2023-08-15")
     date_watched: Optional[date] = Field(None, example="2023-09-20")
+
+    @model_validator(mode='after')
+    def validate_dates(self):
+        if self.date_start and self.date_start < self.release_date:
+            raise ValueError('date_start cannot be before release_date')
+
+        if self.date_watched and self.date_watched < self.release_date:
+            raise ValueError('date_watched cannot be before release_date')
+
+        return self
 
 
 class SeriesCreate(SeriesBase):

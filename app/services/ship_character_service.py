@@ -40,12 +40,12 @@ def add_characters_to_ship(db: Session, ship_id: int, character_ids: list[int]) 
     """Adiciona personagens a um ship"""
     ship = get_ship_character_by_id(db, ship_id)
     if not ship:
-        raise ValueError("Ship not found.")
+        raise ValueError(f"Ship character with id {ship_id} not found. Please verify the ship exists.")
 
     for character_id in character_ids:
         character = db.query(Character).filter(Character.id == character_id).first()
         if not character:
-            continue
+            raise ValueError(f"Character with id {character_id} not found. Please verify the character exists.")
 
         # Verifica se a associação já existe
         exists = (

@@ -3,6 +3,7 @@ from typing import Optional
 
 from app.models.characters import Character
 from app.models.series import Series
+from app.models.actors import Actor
 
 
 def get_character_by_id(db: Session, character_id: int) -> Character | None:
@@ -19,7 +20,12 @@ def create_character(
 ) -> Character:
     series = db.query(Series).filter(Series.id == series_id).first()
     if not series:
-        raise ValueError("Series not found.")
+        raise ValueError(f"Series with id {series_id} not found. Please verify the series exists.")
+
+    if actor_id:
+        actor = db.query(Actor).filter(Actor.id == actor_id).first()
+        if not actor:
+            raise ValueError(f"Actor with id {actor_id} not found. Please verify the actor exists.")
 
     character = Character(
         name=name.strip(),

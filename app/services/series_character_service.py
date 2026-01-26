@@ -14,12 +14,12 @@ def add_characters_to_series(
     series = db.query(Series).filter(Series.id == series_id).first()
 
     if not series:
-        raise ValueError("Series not found.")
+        raise ValueError(f"Series with id {series_id} not found. Please verify the series exists.")
 
     for character_id in character_ids:
         character = db.query(Character).filter(Character.id == character_id).first()
         if not character:
-            continue
+            raise ValueError(f"Character with id {character_id} not found. Please verify the character exists.")
 
         exists = (
             db.query(SeriesCharacter)
