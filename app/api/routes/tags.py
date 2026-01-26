@@ -11,12 +11,23 @@ router = APIRouter(
 )
 
 
-@router.post("/", response_model=TagResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/",
+    response_model=TagResponse,
+    status_code=status.HTTP_201_CREATED,
+    summary="Criar uma nova tag",
+    description="Cria uma nova tag no banco de dados.",
+)
 def create_new_tag(tag: TagCreate, db: Session = Depends(get_db)):
     return create_tag(db=db, name=tag.name)
 
 
-@router.get("/by-name/{name}", response_model=TagResponse)
+@router.get(
+    "/by-name/{name}",
+    response_model=TagResponse,
+    summary="Buscar tag por nome",
+    description="Retorna os dados de uma tag específica pelo nome.",
+)
 def get_tag_by_name_endpoint(name: str, db: Session = Depends(get_db)):
     tag = get_tag_by_name(db=db, name=name)
 
@@ -29,7 +40,12 @@ def get_tag_by_name_endpoint(name: str, db: Session = Depends(get_db)):
     return tag
 
 
-@router.get("/{tag_id}", response_model=TagResponse)
+@router.get(
+    "/{tag_id}",
+    response_model=TagResponse,
+    summary="Buscar tag por ID",
+    description="Retorna os dados de uma tag específica pelo ID.",
+)
 def get_tag_endpoint(tag_id: int, db: Session = Depends(get_db)):
     tag = get_tag_by_id(db=db, tag_id=tag_id)
 

@@ -12,6 +12,8 @@ router = APIRouter(prefix="/characters", tags=["Characters"])
     "",
     response_model=CharacterResponse,
     status_code=status.HTTP_201_CREATED,
+    summary="Criar um novo personagem",
+    description="Cria um novo personagem vinculado a uma série e opcionalmente a um ator. Valida que a série e o ator (se fornecido) existem.",
 )
 def create_character_endpoint(
     payload: CharacterCreate,
@@ -36,6 +38,8 @@ def create_character_endpoint(
     "/{character_id}",
     response_model=CharacterResponse,
     status_code=status.HTTP_200_OK,
+    summary="Buscar personagem por ID",
+    description="Retorna os dados completos de um personagem específico.",
 )
 def get_character_endpoint(
     character_id: int,

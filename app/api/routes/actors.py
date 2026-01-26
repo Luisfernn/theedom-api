@@ -13,6 +13,8 @@ router = APIRouter(prefix="/actors", tags=["Actors"])
     "",
     response_model=ActorResponse,
     status_code=status.HTTP_201_CREATED,
+    summary="Criar um novo ator",
+    description="Cria um novo ator no banco de dados com informações como nome, apelido, nacionalidade, gênero, aniversário, agência e Instagram.",
 )
 def create_actor_endpoint(
     actor_in: ActorCreate,
@@ -34,6 +36,8 @@ def create_actor_endpoint(
     "/{actor_id}",
     response_model=ActorResponse,
     status_code=status.HTTP_200_OK,
+    summary="Buscar ator por ID",
+    description="Retorna os dados completos de um ator específico.",
 )
 def get_actor_endpoint(
     actor_id: int,

@@ -20,6 +20,8 @@ router = APIRouter(prefix="/ship-actors", tags=["Ship Actors"])
     "",
     response_model=ShipActorResponse,
     status_code=status.HTTP_201_CREATED,
+    summary="Criar um novo ship de atores",
+    description="Cria um novo ship de atores no banco de dados. Se um ship com o mesmo nome já existir, retorna o existente.",
 )
 def create_ship_actor_endpoint(
     payload: ShipActorCreate,
@@ -32,6 +34,8 @@ def create_ship_actor_endpoint(
     "/{ship_id}",
     response_model=ShipActorResponse,
     status_code=status.HTTP_200_OK,
+    summary="Buscar ship de atores por ID",
+    description="Retorna os dados de um ship de atores específico.",
 )
 def get_ship_actor_endpoint(
     ship_id: int,
@@ -49,6 +53,8 @@ def get_ship_actor_endpoint(
 @router.post(
     "/{ship_id}/actors",
     status_code=status.HTTP_200_OK,
+    summary="Adicionar atores a um ship",
+    description="Associa um ou mais atores a um ship de atores existente. Valida que todos os atores existem antes de criar as associações.",
 )
 def add_actors_to_ship_endpoint(
     ship_id: int,

@@ -23,6 +23,8 @@ router = APIRouter(prefix="/series", tags=["Series"])
     "",
     response_model=SeriesResponse,
     status_code=status.HTTP_201_CREATED,
+    summary="Criar uma nova série",
+    description="Cria uma nova série BL no banco de dados com todas as informações necessárias (título, país, data de lançamento, número de episódios, etc).",
 )
 def create_series_endpoint(
     series_in: SeriesCreate,
@@ -39,7 +41,12 @@ def create_series_endpoint(
         )
 
 
-@router.post("/{title}/tags", status_code=status.HTTP_200_OK)
+@router.post(
+    "/{title}/tags",
+    status_code=status.HTTP_200_OK,
+    summary="Adicionar tags a uma série",
+    description="Associa uma ou mais tags a uma série existente. Se a tag não existir, ela será criada automaticamente.",
+)
 def add_tags_to_series_endpoint(
     title: str,
     payload: SeriesTagsAdd,
@@ -62,6 +69,8 @@ def add_tags_to_series_endpoint(
 @router.post(
     "/{series_id}/actors",
     status_code=status.HTTP_200_OK,
+    summary="Adicionar atores a uma série",
+    description="Associa um ou mais atores a uma série existente. Valida que todos os atores existem antes de criar as associações.",
 )
 def add_actors_to_series_endpoint(
     series_id: int,
@@ -86,6 +95,8 @@ def add_actors_to_series_endpoint(
 @router.post(
     "/{series_id}/characters",
     status_code=status.HTTP_200_OK,
+    summary="Adicionar personagens a uma série",
+    description="Associa um ou mais personagens a uma série existente. Valida que todos os personagens existem antes de criar as associações.",
 )
 def add_characters_to_series_endpoint(
     series_id: int,
@@ -111,9 +122,11 @@ def add_characters_to_series_endpoint(
     "",
     response_model=List[SeriesResponse],
     status_code=status.HTTP_200_OK,
+    summary="Listar séries",
+    description="Retorna uma lista de todas as séries cadastradas. Opcionalmente, pode filtrar por título usando o parâmetro 'search'.",
 )
 def list_series_endpoint(
-    search: str | None = Query(default=None),
+    search: str | None = Query(default=None, description="Termo de busca para filtrar séries por título"),
     db: Session = Depends(get_db),
 ):
     return list_series(db, search=search)
@@ -123,6 +136,8 @@ def list_series_endpoint(
     "/{series_id}",
     response_model=SeriesDetailResponse,
     status_code=status.HTTP_200_OK,
+    summary="Buscar série por ID",
+    description="Retorna os dados completos de uma série, incluindo atores, personagens, tags, ship_actors e ship_characters associados.",
 )
 def get_series_endpoint(
     series_id: int,
@@ -140,6 +155,8 @@ def get_series_endpoint(
 @router.post(
     "/{series_id}/ship-actors",
     status_code=status.HTTP_200_OK,
+    summary="Adicionar ship de atores a uma série",
+    description="Associa um ship de atores a uma série existente. Valida que tanto a série quanto o ship existem antes de criar a associação.",
 )
 def add_ship_actors_to_series_endpoint(
     series_id: int,
