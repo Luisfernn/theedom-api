@@ -35,8 +35,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 throw new Error(error.detail || 'Erro ao criar BL');
             }
 
+            const data = await response.json();
             alert('BL criado com sucesso! 🌙');
-            // window.location.href = 'index.html';
+            window.location.href = 'bl-details.html?id=' + data.id;
 
         } catch (error) {
             alert(error.message);
