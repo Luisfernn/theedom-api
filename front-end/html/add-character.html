@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Personagens - Theedom</title>
     <link rel="stylesheet" href="../css/add-character.css">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
 </head>
+
 <body>
     <header class="page-header">
         <button class="back-button" onclick="window.history.back()">
@@ -17,8 +20,8 @@
         </div>
         <div class="spacer"></div>
         <button class="logout-button" onclick="logout()">
-    Sair
-</button>
+            Sair
+        </button>
     </header>
 
     <div class="content-container">
@@ -47,39 +50,22 @@
                     <div class="character-header">
                         <h3 class="character-title">Personagem 1</h3>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="character-name-1">Nome do Personagem</label>
-                        <input 
-                            type="text" 
-                            id="character-name-1" 
-                            name="character-name-1" 
-                            class="form-input"
-                            placeholder="Ex: Phaya"
-                            required
-                        >
+                        <input type="text" id="character-name-1" name="character-name-1" class="form-input"
+                            placeholder="Ex: Phaya" required>
                     </div>
 
                     <div class="form-group">
                         <label for="actor-name-1">Ator/Atriz</label>
-                        <input 
-                            type="text" 
-                            id="actor-name-1" 
-                            name="actor-name-1" 
-                            class="form-input"
-                            placeholder="Nome do ator ou atriz"
-                            required
-                        >
+                        <input type="text" id="actor-name-1" name="actor-name-1" class="form-input"
+                            placeholder="Nome do ator ou atriz" required>
                     </div>
 
                     <div class="form-group">
                         <label for="role-type-1">Tipo de Papel</label>
-                        <select 
-                            id="role-type-1" 
-                            name="role-type-1" 
-                            class="form-select"
-                            required
-                        >
+                        <select id="role-type-1" name="role-type-1" class="form-select" required>
                             <option value="">Selecione...</option>
                             <option value="main">Main Role</option>
                             <option value="support">Support Role</option>
@@ -106,4 +92,5 @@
     <script src="js/auth.js"></script>
     <script src="js/add-character.js"></script>
 </body>
+
 </html>

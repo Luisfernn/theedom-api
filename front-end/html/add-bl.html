@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Novo BL - Theedom</title>
     <link rel="stylesheet" href="../css/add-bl.css">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
 </head>
+
 <body>
     <header class="page-header">
         <button class="back-button" onclick="window.location.href='index.html'">
@@ -14,8 +17,8 @@
         <h1 class="page-title">Adicionar Novo BL</h1>
         <div class="spacer"></div>
         <button class="logout-button" onclick="logout()">
-    Sair
-</button>
+            Sair
+        </button>
     </header>
 
     <div class="form-container">
@@ -23,79 +26,40 @@
 
             <div class="form-group">
                 <label for="title" class="required">Título do BL</label>
-                <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    required
-                    placeholder="Ex: Love in the Moonlight"
-                >
+                <input type="text" id="title" name="title" required placeholder="Ex: Love in the Moonlight">
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label for="country">País</label>
-                    <input
-                        type="text"
-                        id="country"
-                        name="country"
-                        placeholder="Ex: Tailândia"
-                    >
+                    <input type="text" id="country" name="country" placeholder="Ex: Tailândia">
                 </div>
 
                 <div class="form-group">
                     <label for="release_date">Data de lançamento</label>
-                    <input
-                        type="text"
-                        id="release_date"
-                        name="release_date"
-                        placeholder="YYYY-MM"
-                    >
+                    <input type="text" id="release_date" name="release_date" placeholder="YYYY-MM">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="genre">Gênero</label>
-                <input
-                    type="text"
-                    id="genre"
-                    name="genre"
-                    placeholder="Ex: Romance, Drama"
-                >
+                <input type="text" id="genre" name="genre" placeholder="Ex: Romance, Drama">
             </div>
 
             <div class="form-group">
                 <label for="synopsis">Sinopse</label>
-                <textarea
-                    id="synopsis"
-                    name="synopsis"
-                    rows="5"
-                    placeholder="Escreva uma breve sinopse..."
-                ></textarea>
+                <textarea id="synopsis" name="synopsis" rows="5" placeholder="Escreva uma breve sinopse..."></textarea>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label for="platform">Plataforma</label>
-                    <input
-                        type="text"
-                        id="platform"
-                        name="platform"
-                        placeholder="Ex: GMMTV, Netflix"
-                    >
+                    <input type="text" id="platform" name="platform" placeholder="Ex: GMMTV, Netflix">
                 </div>
 
                 <div class="form-group">
                     <label for="rate">Nota</label>
-                    <input
-                        type="number"
-                        id="rate"
-                        name="rate"
-                        min="0"
-                        max="10"
-                        step="0.1"
-                        placeholder="0 - 10"
-                    >
+                    <input type="number" id="rate" name="rate" min="0" max="10" step="0.1" placeholder="0 - 10">
                 </div>
             </div>
 
@@ -111,34 +75,19 @@
 
                 <div class="form-group">
                     <label for="production_company">Produtora</label>
-                    <input
-                        type="text"
-                        id="production_company"
-                        name="production_company"
-                        placeholder="Ex: GMMTV"
-                    >
+                    <input type="text" id="production_company" name="production_company" placeholder="Ex: GMMTV">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label for="date_start">Data de início (assistido)</label>
-                    <input
-                        type="text"
-                        id="date_start"
-                        name="date_start"
-                        placeholder="YYYY-MM"
-                    >
+                    <input type="text" id="date_start" name="date_start" placeholder="YYYY-MM">
                 </div>
 
                 <div class="form-group">
                     <label for="date_watched">Data de término (assistido)</label>
-                    <input
-                        type="text"
-                        id="date_watched"
-                        name="date_watched"
-                        placeholder="YYYY-MM"
-                    >
+                    <input type="text" id="date_watched" name="date_watched" placeholder="YYYY-MM">
                 </div>
             </div>
 
@@ -151,4 +100,5 @@
     <script src="js/auth.js"></script>
     <script src="js/add-bl.js"></script>
 </body>
+
 </html>

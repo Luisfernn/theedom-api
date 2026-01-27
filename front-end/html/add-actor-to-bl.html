@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Ator ao BL - Theedom</title>
     <link rel="stylesheet" href="../css/add-actor-to-bl.css">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
 </head>
+
 <body>
     <header class="page-header">
         <button class="back-button" onclick="window.history.back()">
@@ -17,8 +20,8 @@
         </div>
         <div class="spacer"></div>
         <button class="logout-button" onclick="logout()">
-    Sair
-</button>
+            Sair
+        </button>
     </header>
 
     <div class="content-container">
@@ -43,14 +46,8 @@
         <form id="add_actor_form" class="actor-form">
             <div class="form-group">
                 <label for="actor_name">Nome do Ator</label>
-                <input 
-                    type="text" 
-                    id="actor_name" 
-                    name="actor_name"
-                    class="form-input"
-                    placeholder="Digite o nome do ator"
-                    required
-                >
+                <input type="text" id="actor_name" name="actor_name" class="form-input"
+                    placeholder="Digite o nome do ator" required>
             </div>
 
             <div class="form-actions">
@@ -66,4 +63,5 @@
     <script src="js/auth.js"></script>
     <script src="js/add-actor-to-bl.js"></script>
 </body>
+
 </html>
