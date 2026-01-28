@@ -41,6 +41,6 @@ function requireAuth() {
 
 /*Função de logout*/
 function logout() {
-    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem(AUTH_KEY);
     window.location.href = 'login.html';
 }
