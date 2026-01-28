@@ -8,7 +8,7 @@ from app.schemas.series import SeriesCreate, SeriesResponse, SeriesDetailRespons
 from app.services.series_service import create_series, list_series, get_series_by_id, get_series_with_details
 from app.services.series_tag_service import add_tags_to_series
 from app.schemas.series_tags import SeriesTagsAdd
-from app.schemas.series_actors import SeriesActorsAdd
+from app.schemas.series_actors import SeriesActorsAdd, SeriesActorByNicknameAdd
 from app.services.series_actor_service import add_actors_to_series
 from app.schemas.series_characters import SeriesCharactersAdd
 from app.services.series_character_service import add_characters_to_series
@@ -97,7 +97,47 @@ def add_actors_to_series_endpoint(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=str(exc),
-        ) 
+        )
+
+
+@router.post(
+    "/{series_id}/actors-by-nickname",
+    status_code=status.HTTP_200_OK,
+    summary="Vincular ator por nickname",
+    description="Vincula um ator existente a uma série usando o nickname do ator.",
+)
+def add_actor_by_nickname_endpoint(
+    series_id: int,
+    payload: SeriesActorByNicknameAdd,
+    db: Session = Depends(get_db),
+):
+    # Validar série existe
+    series = get_series_by_id(db, series_id)
+    if not series:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Série com id {series_id} não encontrada",
+        )
+
+    # Buscar ator por nickname
+    actor = get_actor_by_nickname(db, payload.actor_nickname)
+    if not actor:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f'Ator com nickname "{payload.actor_nickname}" não encontrado',
+        )
+
+    # Verificar se já está vinculado
+    if actor_belongs_to_series(db, actor.id, series_id):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f'Ator "{actor.nickname}" já está vinculado a esta série',
+        )
+
+    # Vincular ator à série
+    add_actors_to_series(db, series_id=series_id, actor_ids=[actor.id])
+
+    return {"message": f'Ator "{actor.nickname}" vinculado com sucesso.'} 
 
 
 @router.post(

@@ -8,7 +8,7 @@ class SeriesBase(BaseModel):
     title: str = Field(..., example="Love in the Moonlight")
     country: str = Field(..., example="Thailand")
     release_date: date = Field(..., example="2023-08-15")
-    episode_number: int = Field(..., example="12")
+    episode_number: int = Field(..., example="12", ge=1)
     genre: str = Field(..., example="Romance, Drama")
     synopsis: str = Field(..., example="A story about...")
     platform: str = Field(..., example="Netflix")

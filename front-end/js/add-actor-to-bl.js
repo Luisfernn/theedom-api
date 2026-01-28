@@ -40,23 +40,43 @@ async function loadSeriesInfo() {
     }
 }
 
-function handleSubmit(event) {
+async function handleSubmit(event) {
     event.preventDefault();
 
-    const actorNameInput = document.getElementById('actor_name');
-    if (!actorNameInput) return;
+    const actorNicknameInput = document.getElementById('actor_name');
+    if (!actorNicknameInput) return;
 
-    const actorName = actorNameInput.value.trim();
+    const actorNickname = actorNicknameInput.value.trim();
 
-    if (!actorName) {
-        showMessage('error', 'Por favor, digite o nome do ator.');
+    if (!actorNickname) {
+        showMessage('error', 'Por favor, digite o nickname do ator.');
         return;
     }
 
-    // NOTA: A API requer dados completos do ator (nickname, nationality, gender)
-    // Este formulário apenas coleta o nome. Funcionalidade limitada.
-    console.log('Dados coletados:', { blId, actorName });
-    showMessage('error', 'API requer dados completos do ator. Formulario precisa ser expandido.');
+    try {
+        const response = await fetch(`${API_BASE_URL}/series/${blId}/actors-by-nickname`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ actor_nickname: actorNickname })
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.detail || 'Erro ao vincular ator');
+        }
+
+        const result = await response.json();
+        showMessage('success', result.message);
+
+        // Limpar campo
+        actorNicknameInput.value = '';
+
+        // Voltar para detalhes após 2 segundos
+        setTimeout(() => goBackToDetails(), 2000);
+
+    } catch (error) {
+        showMessage('error', error.message);
+    }
 }
 
 function showMessage(type, text) {

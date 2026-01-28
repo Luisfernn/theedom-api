@@ -4,40 +4,7 @@ const blId = urlParams.get('blId');
 
 if (!blId) {
     alert('BL não informado');
-    window.history.back();
-}
-
-// Mock simulando resposta do backend
-function getMockBlData(blId) {
-    return {
-        id: Number(blId),
-        title: "Love in the Moonlight",
-        country: "Tailândia",
-        release_date: "2024-01",
-        genre: "Romance, Drama",
-        platform: "GMMTV",
-        status: "Completed",
-        rating: "9.5",
-        producer: "GMMTV Studio",
-        start_date: "2024-01",
-        end_date: "2024-03",
-        synopsis:
-            "Uma história romântica envolvente que se passa sob a luz do luar...",
-        characters: [
-            { name: "Phaya", actor: "Billy Patchanon" },
-            { name: "Tharn", actor: "Babe Tanatat" }
-        ],
-        actors: [
-            { name: "Billy Patchanon" },
-            { name: "Babe Tanatat" }
-        ],
-        character_ships: [
-            { name: "PhayaTharn", characters: "Phaya × Tharn" }
-        ],
-        actor_ships: [
-            { name: "BillyBabe", actors: "Billy × Babe" }
-        ]
-    };
+    window.location.href = 'bl-list.html';
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -45,119 +12,155 @@ document.addEventListener('DOMContentLoaded', function () {
     loadBlDetails();
 });
 
-function loadBlDetails() {
-    // FUTURO:
-    // fetch(`/api/bls/${blId}`).then(...)
+async function loadBlDetails() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/series/${blId}`);
 
-    const blData = getMockBlData(blId);
+        if (!response.ok) {
+            throw new Error('Erro ao carregar detalhes do BL');
+        }
 
-    document.getElementById('bl-title').textContent = blData.title;
-    document.getElementById('country').textContent = blData.country;
-    document.getElementById('release_date').textContent = blData.release_date;
-    document.getElementById('genre').textContent = blData.genre;
-    document.getElementById('platform').textContent = blData.platform;
-    document.getElementById('status').textContent = blData.status;
-    document.getElementById('rating').textContent = blData.rating;
-    document.getElementById('producer').textContent = blData.producer;
-    document.getElementById('start_date').textContent = blData.start_date;
-    document.getElementById('end_date').textContent = blData.end_date;
-    document.getElementById('synopsis').textContent = blData.synopsis;
+        const blData = await response.json();
 
-    renderCharacters(blData.characters);
-    renderActors(blData.actors);
-    renderCharacterShips(blData.character_ships);
-    renderActorShips(blData.actor_ships);
+        // Preencher informações básicas
+        document.getElementById('bl_title').textContent = blData.title || 'Sem título';
+        document.getElementById('country').textContent = blData.country || '-';
+        document.getElementById('release_date').textContent = formatDate(blData.release_date);
+        document.getElementById('genre').textContent = blData.genre || '-';
+        document.getElementById('platform').textContent = blData.platform || '-';
+        document.getElementById('status').textContent = blData.status || '-';
+        document.getElementById('rating').textContent = blData.rate || '-';
+        document.getElementById('producer').textContent = blData.production_company || '-';
+        document.getElementById('start_date').textContent = formatDate(blData.date_start);
+        document.getElementById('end_date').textContent = formatDate(blData.date_watched);
+        document.getElementById('synopsis').textContent = blData.synopsis || '-';
+
+        // Renderizar listas
+        renderCharacters(blData.characters || []);
+        renderActors(blData.actors || []);
+        renderCharacterShips(blData.ship_characters || []);
+        renderActorShips(blData.ship_actors || []);
+
+    } catch (error) {
+        console.error('Erro ao carregar detalhes:', error);
+        alert('Erro ao carregar detalhes do BL');
+    }
+}
+
+function formatDate(dateString) {
+    if (!dateString) return '-';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR');
 }
 
 function renderCharacters(characters) {
-    const list = document.getElementById('characters-list');
-    const empty = document.getElementById('characters-empty');
+    const list = document.getElementById('characters_list');
+    const empty = document.getElementById('characters_empty');
 
     list.innerHTML = '';
 
     if (!characters || characters.length === 0) {
-        empty.classList.add('show');
+        empty.style.display = 'block';
+        list.style.display = 'none';
         return;
     }
 
-    empty.classList.remove('show');
+    empty.style.display = 'none';
+    list.style.display = 'grid';
 
     characters.forEach(c => {
         const card = document.createElement('div');
         card.className = 'item-card';
         card.innerHTML = `
             <div class="item-name">${c.name}</div>
-            <div class="item-detail">Ator: ${c.actor}</div>
+            <div class="item-detail">Tipo: ${c.role_type || '-'}</div>
         `;
         list.appendChild(card);
     });
 }
 
 function renderActors(actors) {
-    const list = document.getElementById('actors-list');
-    const empty = document.getElementById('actors-empty');
+    const list = document.getElementById('actors_list');
+    const empty = document.getElementById('actors_empty');
 
     list.innerHTML = '';
 
     if (!actors || actors.length === 0) {
-        empty.classList.add('show');
+        empty.style.display = 'block';
+        list.style.display = 'none';
         return;
     }
 
-    empty.classList.remove('show');
+    empty.style.display = 'none';
+    list.style.display = 'grid';
 
     actors.forEach(actor => {
         const card = document.createElement('div');
         card.className = 'item-card';
-        card.innerHTML = `<div class="actor-name">${actor.name}</div>`;
+        card.innerHTML = `<div class="item-name">${actor.name}</div>`;
         list.appendChild(card);
     });
 }
 
 function renderCharacterShips(ships) {
-    const list = document.getElementById('character-ships-list');
-    const empty = document.getElementById('character-ships-empty');
+    const list = document.getElementById('character_ships_list');
+    const empty = document.getElementById('character_ships_empty');
 
     list.innerHTML = '';
 
     if (!ships || ships.length === 0) {
-        empty.classList.add('show');
+        empty.style.display = 'block';
+        list.style.display = 'none';
         return;
     }
 
-    empty.classList.remove('show');
+    empty.style.display = 'none';
+    list.style.display = 'grid';
 
     ships.forEach(ship => {
         const card = document.createElement('div');
         card.className = 'item-card';
-        card.innerHTML = `
-            <div class="item-name">${ship.name}</div>
-            <div class="ship-characters">${ship.characters}</div>
-        `;
+        card.innerHTML = `<div class="item-name">${ship.name}</div>`;
         list.appendChild(card);
     });
 }
 
 function renderActorShips(ships) {
-    const list = document.getElementById('actor-ships-list');
-    const empty = document.getElementById('actor-ships-empty');
+    const list = document.getElementById('actor_ships_list');
+    const empty = document.getElementById('actor_ships_empty');
 
     list.innerHTML = '';
 
     if (!ships || ships.length === 0) {
-        empty.classList.add('show');
+        empty.style.display = 'block';
+        list.style.display = 'none';
         return;
     }
 
-    empty.classList.remove('show');
+    empty.style.display = 'none';
+    list.style.display = 'grid';
 
     ships.forEach(ship => {
         const card = document.createElement('div');
         card.className = 'item-card';
-        card.innerHTML = `
-            <div class="item-name">${ship.name}</div>
-            <div class="ship-actors">${ship.actors}</div>
-        `;
+        card.innerHTML = `<div class="item-name">${ship.name}</div>`;
         list.appendChild(card);
     });
+}
+
+// Funções de navegação para vincular elementos
+function linkCharacter() {
+    window.location.href = `add-character.html?blId=${blId}`;
+}
+
+function linkActor() {
+    window.location.href = `add-actor-to-bl.html?blId=${blId}`;
+}
+
+function linkCharacterShip() {
+    window.location.href = `add-character-ship.html?blId=${blId}`;
+}
+
+function linkActorShip() {
+    window.location.href = `add-actor-ship.html?blId=${blId}`;
 }

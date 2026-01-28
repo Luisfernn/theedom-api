@@ -16,7 +16,7 @@
         </button>
         <div class="header-content">
             <h1 class="page-title">Adicionar Ator ao BL</h1>
-            <p class="page-subtitle">Digite o nome do ator para vincular a este BL</p>
+            <p class="page-subtitle">Digite o nickname do ator para vincular a este BL</p>
         </div>
         <div class="spacer"></div>
         <button class="logout-button" onclick="logout()">
@@ -28,7 +28,7 @@
         <!-- BL Atual -->
         <div class="bl-info-banner">
             <span class="banner-label">BL:</span>
-            <span class="banner-value" id="current_bl">Love in the Moonlight</span>
+            <span class="banner-value" id="current_bl">Carregando...</span>
         </div>
 
         <!-- Mensagens de Feedback -->
@@ -45,9 +45,9 @@
         <!-- Formulário -->
         <form id="add_actor_form" class="actor-form">
             <div class="form-group">
-                <label for="actor_name">Nome do Ator</label>
+                <label for="actor_name">Nickname do Ator</label>
                 <input type="text" id="actor_name" name="actor_name" class="form-input"
-                    placeholder="Digite o nome do ator" required>
+                    placeholder="Ex: Bright, Win, Mile" required>
             </div>
 
             <div class="form-actions">

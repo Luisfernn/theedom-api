@@ -3,12 +3,23 @@ from sqlalchemy.orm import Session
 
 from app.core.database import get_db
 from app.schemas.tag import TagCreate, TagResponse
-from app.services.tag_service import create_tag, get_tag_by_name, get_tag_by_id
+from app.services.tag_service import create_tag, get_tag_by_name, get_tag_by_id, list_tags
+from typing import List
 
 router = APIRouter(
     prefix="/tags",
     tags=["Tags"]
 )
+
+
+@router.get(
+    "/",
+    response_model=List[TagResponse],
+    summary="Listar todas as tags",
+    description="Retorna todas as tags cadastradas, ordenadas por nome.",
+)
+def list_all_tags(db: Session = Depends(get_db)):
+    return list_tags(db=db)
 
 
 @router.post(

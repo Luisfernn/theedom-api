@@ -18,6 +18,10 @@ def get_tag_by_id(db: Session, tag_id: int) -> Tag | None:
     return db.query(Tag).filter(Tag.id == tag_id).first()
 
 
+def list_tags(db: Session) -> list[Tag]:
+    return db.query(Tag).order_by(Tag.name).all()
+
+
 def create_tag(db: Session, *, name: str) -> Tag:
     """
     Creates a tag if it does not exist.
