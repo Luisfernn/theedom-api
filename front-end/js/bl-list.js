@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function loadBls() {
     try {
-        const response = await fetch('http://127.0.0.1:8000/series');
+        const response = await fetch(`${API_BASE_URL}/series`);
 
         if (!response.ok) {
             throw new Error('Erro ao buscar BLs');

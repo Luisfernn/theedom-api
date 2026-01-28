@@ -24,7 +24,7 @@ async function handleLoginSubmit(event) {
     }
 
     try {
-        const response = await fetch("http://localhost:8000/auth/login", {
+        const response = await fetch(`${API_BASE_URL}/auth/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

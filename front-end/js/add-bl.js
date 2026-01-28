@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         try {
-            const response = await fetch('http://localhost:8000/series', {
+            const response = await fetch(`${API_BASE_URL}/series`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const data = await response.json();
             alert('BL criado com sucesso! 🌙');
-            window.location.href = 'bl-details.html?id=' + data.id;
+            window.location.href = 'bl-details.html?blId=' + data.id;
 
         } catch (error) {
             alert(error.message);
