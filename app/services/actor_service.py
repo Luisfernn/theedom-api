@@ -16,6 +16,19 @@ def get_actor_by_name(db: Session, name: str) -> Actor | None:
     )
 
 
+def get_actor_by_nickname(db: Session, nickname: str) -> Actor | None:
+    """
+    Busca ator por nickname (case-insensitive).
+    Normaliza apenas para comparação, não altera o valor salvo.
+    """
+    normalized = nickname.strip()
+    return (
+        db.query(Actor)
+        .filter(func.lower(Actor.nickname) == func.lower(normalized))
+        .first()
+    )
+
+
 def get_actor_by_id(db: Session, actor_id: int) -> Actor | None:
     return db.query(Actor).filter(Actor.id == actor_id).first()
 
