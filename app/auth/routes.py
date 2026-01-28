@@ -1,8 +1,16 @@
+import os
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from app.core.security import verify_password
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
+
+# Credenciais do admin via variáveis de ambiente
+VALID_LOGIN = os.getenv("ADMIN_LOGIN")
+HASHED_PASSWORD = os.getenv("ADMIN_PASSWORD_HASH")
+
+if not VALID_LOGIN or not HASHED_PASSWORD:
+    raise ValueError("ADMIN_LOGIN e ADMIN_PASSWORD_HASH devem estar definidos no .env")
 
 
 # Modelo de dados do login
@@ -13,11 +21,6 @@ class LoginRequest(BaseModel):
 
 @router.post("/login")
 def login(data: LoginRequest):
-    # Credenciais fixas (apenas você)
-    VALID_LOGIN = "Thee"
-    HASHED_PASSWORD = "$2b$12$yWnFQ8Z9jmmY/R86hLs.pOp5Dll1Y9sqDzA8IaHICelZUzwvm2Ppq"
-    # ↑ hash de exemplo (senha real você decide)
-
     if data.login != VALID_LOGIN:
         raise HTTPException(status_code=401, detail="Login inválido")
 
