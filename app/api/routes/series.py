@@ -17,6 +17,11 @@ from app.services.ship_actors_series_service import add_ship_actor_to_series
 from app.services.actor_service import get_actor_by_nickname, actor_belongs_to_series
 from app.services.ship_actor_service import get_ship_actor_by_name, create_ship_actor, add_actors_to_ship
 from app.models.ship_actors_series import ShipActorSeries
+from app.schemas.ship_characters import ShipCharactersByNameCreate
+from app.services.character_service import get_character_by_name_in_series
+from app.services.ship_character_service import get_ship_character_by_name, create_ship_character, add_characters_to_ship
+from app.models.ship_characters_characters import ShipCharacterCharacter
+from app.models.characters import Character
 
 
 router = APIRouter(prefix="/series", tags=["Series"])
@@ -264,3 +269,73 @@ def create_ship_actors_by_name_endpoint(
     add_ship_actor_to_series(db, series_id=series_id, ship_actor_id=ship.id)
 
     return {"message": "Ship de atores criado com sucesso.", "ship_id": ship.id}
+
+
+@router.post(
+    "/{series_id}/ship-characters-by-name",
+    status_code=status.HTTP_201_CREATED,
+    summary="Criar ship de personagens por nome",
+    description="Cria um ship de personagens usando os nomes dos personagens. Os personagens devem pertencer à série.",
+)
+def create_ship_characters_by_name_endpoint(
+    series_id: int,
+    payload: ShipCharactersByNameCreate,
+    db: Session = Depends(get_db),
+):
+    from app.services.series_service import get_series_by_id
+
+    # Validar série existe
+    series = get_series_by_id(db, series_id)
+    if not series:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Série com id {series_id} não encontrada",
+        )
+
+    # Buscar personagens por nome dentro da série
+    character1 = get_character_by_name_in_series(db, payload.character1_name, series_id)
+    if not character1:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f'Personagem "{payload.character1_name}" não encontrado nesta série',
+        )
+
+    character2 = get_character_by_name_in_series(db, payload.character2_name, series_id)
+    if not character2:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f'Personagem "{payload.character2_name}" não encontrado nesta série',
+        )
+
+    # Validar personagens diferentes
+    if character1.id == character2.id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Os dois personagens devem ser diferentes",
+        )
+
+    # Verificar se já existe ship com esse nome vinculado a personagens desta série
+    existing_ship = get_ship_character_by_name(db, payload.ship_name)
+    if existing_ship:
+        ship_in_series = (
+            db.query(ShipCharacterCharacter)
+            .join(Character, ShipCharacterCharacter.character_id == Character.id)
+            .filter(
+                ShipCharacterCharacter.ship_id == existing_ship.id,
+                Character.series_id == series_id,
+            )
+            .first()
+        )
+        if ship_in_series:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f'Já existe um ship "{payload.ship_name}" nesta série',
+            )
+
+    # Criar ship (ou obter existente de outra série)
+    ship = create_ship_character(db, name=payload.ship_name)
+
+    # Vincular personagens ao ship
+    add_characters_to_ship(db, ship.id, [character1.id, character2.id])
+
+    return {"message": "Ship de personagens criado com sucesso.", "ship_id": ship.id}
