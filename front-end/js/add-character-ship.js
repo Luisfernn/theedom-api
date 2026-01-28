@@ -87,15 +87,21 @@ async function handleSubmit(e) {
         const section = document.getElementById(`ship-section-${i}`);
         if (!section) continue;
 
-        const shipName = document.getElementById(`ship-name-${i}`).value.trim();
+        const shipName = document.getElementById(`ship-name-${i}`)?.value.trim();
+        const character1 = document.getElementById(`character-1-${i}`)?.value.trim();
+        const character2 = document.getElementById(`character-2-${i}`)?.value.trim();
 
-        if (shipName) {
-            ships.push({ name: shipName });
+        if (shipName && character1 && character2) {
+            ships.push({
+                ship_name: shipName,
+                character1_name: character1,
+                character2_name: character2
+            });
         }
     }
 
     if (ships.length === 0) {
-        showMessage('error', 'Preencha pelo menos um ship.');
+        showMessage('error', 'Preencha todos os campos de pelo menos um ship.');
         return;
     }
 
@@ -103,18 +109,18 @@ async function handleSubmit(e) {
         let successCount = 0;
 
         for (const ship of ships) {
-            const response = await fetch(`${API_BASE_URL}/ship-characters`, {
+            const response = await fetch(`${API_BASE_URL}/series/${blId}/ship-characters-by-name`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: ship.name })
+                body: JSON.stringify(ship)
             });
 
-            if (response.ok) {
-                successCount++;
-            } else {
+            if (!response.ok) {
                 const error = await response.json();
                 throw new Error(error.detail || 'Erro ao criar ship');
             }
+
+            successCount++;
         }
 
         showMessage('success', `${successCount} ship(s) de personagens criado(s)!`);
