@@ -29,12 +29,17 @@ document.addEventListener('DOMContentLoaded', async function () {
 async function loadSeriesInfo() {
     try {
         const response = await fetch(`${API_BASE_URL}/series/${blId}`);
-        if (response.ok) {
-            const series = await response.json();
-            document.getElementById('current-bl').textContent = series.title;
+        if (!response.ok) {
+            alert('BL não encontrado.');
+            window.location.href = 'bl-list.html';
+            return;
         }
+        const series = await response.json();
+        document.getElementById('current-bl').textContent = series.title;
     } catch (error) {
         console.error('Erro ao carregar serie:', error);
+        alert('Erro ao verificar BL.');
+        window.location.href = 'bl-list.html';
     }
 }
 
