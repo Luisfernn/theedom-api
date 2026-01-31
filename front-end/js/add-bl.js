@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 ? Number(document.getElementById('rate').value)
                 : null,
             status: document.getElementById('status').value || null,
-            production_company: document.getElementById('producer').value || null,
+            production_company: document.getElementById('production_company').value || null,
             date_start: document.getElementById('date_start').value || null,
             date_watched: document.getElementById('date_watched').value || null
         };
