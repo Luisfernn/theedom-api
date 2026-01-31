@@ -29,7 +29,6 @@ async function handleLoginSubmit(event) {
             headers: {
                 "Content-Type": "application/json"
             },
-            credentials: "include", // 🔴 ESSENCIAL (cookie)
             body: JSON.stringify({ login, password })
         });
 
