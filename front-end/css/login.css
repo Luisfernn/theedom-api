@@ -188,6 +188,14 @@ label {
     color: rgba(255, 255, 255, 0.3);
 }
 
+.form-input:-webkit-autofill,
+.form-input:-webkit-autofill:hover,
+.form-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px rgba(20, 20, 25, 1) inset;
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
 /* Botão de submit */
 .submit-button {
     background: linear-gradient(135deg, #8e44ad, #7d3c98);

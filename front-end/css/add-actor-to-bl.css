@@ -185,6 +185,14 @@ label {
     color: #666;
 }
 
+.form-input:-webkit-autofill,
+.form-input:-webkit-autofill:hover,
+.form-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #1a1a1a inset;
+    -webkit-text-fill-color: #e0e0e0;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
 .form-actions {
     display: flex;
     gap: 15px;
