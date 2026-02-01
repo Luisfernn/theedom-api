@@ -49,6 +49,7 @@ class SeriesResponse(SeriesBase):
 class ActorInSeries(BaseModel):
     id: int
     name: str
+    nickname: str
     birthday: Optional[date] = None
     agency: Optional[str] = None
     ig: Optional[str] = None

@@ -17,6 +17,7 @@ if (!blId) {
 }
 
 let characterCount = 1;
+let blActors = [];
 
 document.addEventListener('DOMContentLoaded', async function () {
     requireAuth();
@@ -38,11 +39,24 @@ async function loadSeriesInfo() {
         }
         const series = await response.json();
         document.getElementById('current-bl').textContent = series.title;
+
+        blActors = series.actors || [];
+        populateActorSelect(document.getElementById('actor-name-1'));
     } catch (error) {
         console.error('Erro ao carregar serie:', error);
         alert('Erro ao verificar BL.');
         window.location.href = 'bl-list.html';
     }
+}
+
+function populateActorSelect(select) {
+    select.innerHTML = '<option value="">Selecione o ator/atriz...</option>';
+    blActors.forEach(actor => {
+        const option = document.createElement('option');
+        option.value = actor.nickname;
+        option.textContent = actor.nickname;
+        select.appendChild(option);
+    });
 }
 
 function addCharacterSection() {
@@ -73,12 +87,13 @@ function addCharacterSection() {
 
         <div class="form-group">
             <label for="actor-name-${characterCount}">Ator/Atriz</label>
-            <input
-                type="text"
+            <select
                 id="actor-name-${characterCount}"
-                class="form-input"
+                class="form-select"
                 required
             >
+                <option value="">Selecione o ator/atriz...</option>
+            </select>
         </div>
 
         <div class="form-group">
@@ -96,6 +111,7 @@ function addCharacterSection() {
     `;
 
     charactersContainer.appendChild(characterSection);
+    populateActorSelect(document.getElementById(`actor-name-${characterCount}`));
 }
 
 function removeCharacterSection(characterNumber) {
@@ -113,10 +129,11 @@ async function handleSubmit(e) {
         if (!section) continue;
 
         const name = document.getElementById(`character-name-${i}`)?.value.trim();
+        const actorNickname = document.getElementById(`actor-name-${i}`)?.value;
         const role = document.getElementById(`role-type-${i}`)?.value;
 
-        if (name && role) {
-            characters.push({ name, role_type: role });
+        if (name && actorNickname && role) {
+            characters.push({ name, actor_nickname: actorNickname, role_type: role });
         }
     }
 
@@ -136,6 +153,7 @@ async function handleSubmit(e) {
                 body: JSON.stringify({
                     name: char.name,
                     series_id: Number(blId),
+                    actor_nickname: char.actor_nickname,
                     role_type: char.role_type
                 })
             });
