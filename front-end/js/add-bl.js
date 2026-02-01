@@ -37,15 +37,22 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const data = await response.json();
-            const continuar = confirm('BL criado com sucesso! 🌙\n\nDeseja continuar adicionando informações (atores, personagens, ships, tags)?');
-            if (continuar) {
-                window.location.href = 'add-actor-to-bl.html?blId=' + data.id + '&flow=create';
-            } else {
-                window.location.href = 'bl-details.html?blId=' + data.id;
-            }
+            showSuccessModal(data.id);
 
         } catch (error) {
             alert(error.message);
         }
     });
 });
+
+function showSuccessModal(blId) {
+    const modal = document.getElementById('success-modal');
+    modal.style.display = 'flex';
+
+    document.getElementById('modal-btn-yes').onclick = function () {
+        window.location.href = 'add-actor-to-bl.html?blId=' + blId + '&flow=create';
+    };
+    document.getElementById('modal-btn-no').onclick = function () {
+        window.location.href = 'bl-details.html?blId=' + blId;
+    };
+}
