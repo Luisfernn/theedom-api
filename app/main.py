@@ -18,6 +18,14 @@ app = FastAPI(
     redoc_url="/redoc"
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
+)
+
 app.include_router(auth_router)
 app.include_router(series_router)
 app.include_router(tags_router)
@@ -25,13 +33,6 @@ app.include_router(actors_router)
 app.include_router(characters_router)
 app.include_router(ship_actors_router)
 app.include_router(ship_characters_router)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allow_headers=["Content-Type", "Authorization"],
-)
 
 
 @app.get("/health")
