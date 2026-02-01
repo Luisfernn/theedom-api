@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session, joinedload
 from app.models.series import Series
 from app.schemas.series import SeriesCreate
 from app.models.series_actors import SeriesActor
-from sqlalchemy import func
+from sqlalchemy import func, extract
 from app.services.actor_service import get_actor_by_name
 
 def create_series(db: Session, series: SeriesCreate):
@@ -100,6 +100,9 @@ def add_actors_to_series(db: Session, series_id: int, actor_names: list[str]) ->
 def list_series(
     db: Session,
     search: str | None = None,
+    country: str | None = None,
+    status: str | None = None,
+    year: int | None = None,
 ) -> list[Series]:
     query = db.query(Series)
 
@@ -107,5 +110,31 @@ def list_series(
         query = query.filter(
             func.lower(Series.title).like(f"%{search.lower()}%")
         )
+    if country:
+        query = query.filter(Series.country == country)
+    if status:
+        query = query.filter(Series.status == status)
+    if year:
+        query = query.filter(extract('year', Series.release_date) == year)
 
-    return query.order_by(Series.title).all()
+    return query.order_by(Series.release_date.desc()).all()
+
+
+def get_series_filters(db: Session) -> dict:
+    countries = (
+        db.query(Series.country)
+        .distinct()
+        .order_by(Series.country)
+        .all()
+    )
+    years = (
+        db.query(extract('year', Series.release_date))
+        .distinct()
+        .order_by(extract('year', Series.release_date).desc())
+        .all()
+    )
+    return {
+        "countries": [c[0] for c in countries if c[0]],
+        "statuses": ["Completed", "Dropped"],
+        "years": [int(y[0]) for y in years if y[0]],
+    }

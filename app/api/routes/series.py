@@ -5,7 +5,7 @@ from app.core.database import get_db
 from fastapi import Query
 from typing import List
 from app.schemas.series import SeriesCreate, SeriesResponse, SeriesDetailResponse
-from app.services.series_service import create_series, list_series, get_series_by_id, get_series_with_details
+from app.services.series_service import create_series, list_series, get_series_by_id, get_series_with_details, get_series_filters
 from app.services.series_tag_service import add_tags_to_series, add_tags_to_series_by_id
 from app.schemas.series_tags import SeriesTagsAdd
 from app.schemas.series_actors import SeriesActorsAdd, SeriesActorByNicknameAdd
@@ -200,9 +200,22 @@ def add_characters_to_series_endpoint(
 )
 def list_series_endpoint(
     search: str | None = Query(default=None, description="Termo de busca para filtrar séries por título"),
+    country: str | None = Query(default=None, description="Filtrar por país"),
+    status_filter: str | None = Query(default=None, alias="status", description="Filtrar por status (Completed/Dropped)"),
+    year: int | None = Query(default=None, description="Filtrar por ano de lançamento"),
     db: Session = Depends(get_db),
 ):
-    return list_series(db, search=search)
+    return list_series(db, search=search, country=country, status=status_filter, year=year)
+
+
+@router.get(
+    "/filters",
+    status_code=status.HTTP_200_OK,
+    summary="Opções de filtro para listagem",
+    description="Retorna países, status e anos disponíveis para filtrar séries.",
+)
+def get_filters_endpoint(db: Session = Depends(get_db)):
+    return get_series_filters(db)
 
 
 @router.get(
