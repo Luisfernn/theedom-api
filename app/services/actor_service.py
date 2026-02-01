@@ -65,6 +65,10 @@ def create_actor(
     if existing_actor:
         return existing_actor
 
+    existing_by_nickname = get_actor_by_nickname(db, nickname)
+    if existing_by_nickname:
+        return existing_by_nickname
+
     actor = Actor(
         name=name.strip(),
         nickname=nickname.strip(),
