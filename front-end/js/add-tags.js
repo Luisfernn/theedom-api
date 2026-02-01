@@ -1,6 +1,7 @@
-// ====== BL vindo da URL ======
+// ====== BL e flow vindos da URL ======
 const urlParams = new URLSearchParams(window.location.search);
 const blId = urlParams.get('blId');
+const isCreateFlow = urlParams.get('flow') === 'create';
 
 // Função para voltar para bl-details (navegação explícita)
 function goBackToDetails() {
@@ -29,6 +30,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     document
         .getElementById('add-tags-form')
         .addEventListener('submit', handleSubmit);
+
+    if (isCreateFlow) {
+        renderFlowNavigation();
+    }
 });
 
 async function loadSeriesInfo() {
@@ -137,7 +142,7 @@ async function handleSubmit(e) {
             throw new Error(error.detail || 'Erro ao vincular tags');
         }
 
-        showMessage('success', 'Tags vinculadas com sucesso!');
+        showMessage('success', isCreateFlow ? 'Tags vinculadas com sucesso! Redirecionando para detalhes do BL...' : 'Tags vinculadas com sucesso!');
         setTimeout(() => goBackToDetails(), 2000);
     } catch (error) {
         showMessage('error', error.message);
@@ -156,4 +161,19 @@ function showMessage(type, text) {
     target.style.display = 'flex';
 
     setTimeout(() => target.style.display = 'none', 5000);
+}
+
+function renderFlowNavigation() {
+    const container = document.querySelector('.content-container');
+    const nav = document.createElement('div');
+    nav.className = 'flow-navigation';
+    nav.innerHTML = `
+        <button type="button" class="flow-btn flow-btn-home" onclick="window.location.href='index.html'">
+            Voltar para Home
+        </button>
+        <button type="button" class="flow-btn flow-btn-next" onclick="window.location.href='bl-details.html?blId=${blId}'">
+            Concluir →
+        </button>
+    `;
+    container.appendChild(nav);
 }

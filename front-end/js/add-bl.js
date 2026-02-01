@@ -37,8 +37,12 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const data = await response.json();
-            alert('BL criado com sucesso! 🌙');
-            window.location.href = 'bl-details.html?blId=' + data.id;
+            const continuar = confirm('BL criado com sucesso! 🌙\n\nDeseja continuar adicionando informações (atores, personagens, ships, tags)?');
+            if (continuar) {
+                window.location.href = 'add-actor-to-bl.html?blId=' + data.id + '&flow=create';
+            } else {
+                window.location.href = 'bl-details.html?blId=' + data.id;
+            }
 
         } catch (error) {
             alert(error.message);

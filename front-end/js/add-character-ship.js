@@ -1,6 +1,7 @@
-// ====== BL vindo da URL ======
+// ====== BL e flow vindos da URL ======
 const urlParams = new URLSearchParams(window.location.search);
 const blId = urlParams.get('blId');
+const isCreateFlow = urlParams.get('flow') === 'create';
 
 // Função para voltar para bl-details (navegação explícita)
 function goBackToDetails() {
@@ -24,6 +25,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     const form = document.getElementById('add-ship-form');
     form.addEventListener('submit', handleSubmit);
+
+    if (isCreateFlow) {
+        renderFlowNavigation('add-tags.html');
+    }
 });
 
 async function loadSeriesInfo() {
@@ -131,7 +136,11 @@ async function handleSubmit(e) {
 
         if (successCount > 0 && errors.length === 0) {
             showMessage('success', `${successCount} ship(s) de personagens criado(s)!`);
-            setTimeout(() => goBackToDetails(), 2000);
+            if (isCreateFlow) {
+                setTimeout(() => { window.location.href = 'add-tags.html?blId=' + blId + '&flow=create'; }, 2000);
+            } else {
+                setTimeout(() => goBackToDetails(), 2000);
+            }
         } else if (successCount > 0 && errors.length > 0) {
             showMessage('error', `${successCount} criado(s), ${errors.length} falha(s): ${errors.join('; ')}`);
         } else {
@@ -154,4 +163,19 @@ function showMessage(type, text) {
     target.style.display = 'flex';
 
     setTimeout(() => target.style.display = 'none', 5000);
+}
+
+function renderFlowNavigation(nextPage) {
+    const container = document.querySelector('.content-container');
+    const nav = document.createElement('div');
+    nav.className = 'flow-navigation';
+    nav.innerHTML = `
+        <button type="button" class="flow-btn flow-btn-home" onclick="window.location.href='index.html'">
+            Voltar para Home
+        </button>
+        <button type="button" class="flow-btn flow-btn-next" onclick="window.location.href='${nextPage}?blId=${blId}&flow=create'">
+            Próximo →
+        </button>
+    `;
+    container.appendChild(nav);
 }

@@ -1,6 +1,7 @@
-// Obter BL pela URL
+// Obter BL e flow pela URL
 const urlParams = new URLSearchParams(window.location.search);
 const blId = urlParams.get('blId');
+const isCreateFlow = urlParams.get('flow') === 'create';
 
 // Função para voltar para bl-details (navegação explícita)
 function goBackToDetails() {
@@ -25,6 +26,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const form = document.getElementById('add_actor_form');
     if (form) {
         form.addEventListener('submit', handleSubmit);
+    }
+
+    if (isCreateFlow) {
+        renderFlowNavigation('add-character.html');
     }
 });
 
@@ -76,8 +81,12 @@ async function handleSubmit(event) {
         // Limpar campo
         actorNicknameInput.value = '';
 
-        // Voltar para detalhes após 2 segundos
-        setTimeout(() => goBackToDetails(), 2000);
+        // Redirecionar após 2 segundos
+        if (isCreateFlow) {
+            setTimeout(() => { window.location.href = 'add-character.html?blId=' + blId + '&flow=create'; }, 2000);
+        } else {
+            setTimeout(() => goBackToDetails(), 2000);
+        }
 
     } catch (error) {
         showMessage('error', error.message);
@@ -115,4 +124,19 @@ function showMessage(type, text) {
             errorMessage.style.display = 'none';
         }, 5000);
     }
+}
+
+function renderFlowNavigation(nextPage) {
+    const container = document.querySelector('.content-container');
+    const nav = document.createElement('div');
+    nav.className = 'flow-navigation';
+    nav.innerHTML = `
+        <button type="button" class="flow-btn flow-btn-home" onclick="window.location.href='index.html'">
+            Voltar para Home
+        </button>
+        <button type="button" class="flow-btn flow-btn-next" onclick="window.location.href='${nextPage}?blId=${blId}&flow=create'">
+            Próximo →
+        </button>
+    `;
+    container.appendChild(nav);
 }

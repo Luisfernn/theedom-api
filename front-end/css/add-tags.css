@@ -406,3 +406,44 @@ body {
         width: 100%;
     }
 }
+
+/* Flow de criação — navegação */
+.flow-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+}
+
+.flow-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.flow-btn:hover {
+    transform: translateY(-1px);
+}
+
+.flow-btn-home {
+    background: #333;
+    color: #e0e0e0;
+}
+
+.flow-btn-home:hover {
+    background: #444;
+}
+
+.flow-btn-next {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.flow-btn-next:hover {
+    background: linear-gradient(135deg, #5a6fd6, #6a4293);
+}
