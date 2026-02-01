@@ -23,6 +23,9 @@ async function handleLoginSubmit(event) {
         return;
     }
 
+    const btn = document.getElementById("submit-btn");
+    setLoading(btn, true);
+
     try {
         const response = await fetch(`${API_BASE_URL}/auth/login`, {
             method: "POST",
@@ -45,6 +48,7 @@ async function handleLoginSubmit(event) {
         }, 1000);
 
     } catch (error) {
+        setLoading(btn, false);
         showMessage("error", error.message);
     }
 }
@@ -55,6 +59,24 @@ function clearMessages() {
 
     if (errorBox) errorBox.style.display = 'none';
     if (successBox) successBox.style.display = 'none';
+}
+
+function setLoading(btn, loading) {
+    const text = btn.querySelector('.button-text');
+    const icon = btn.querySelector('.button-icon');
+    const spinner = btn.querySelector('.button-spinner');
+
+    if (loading) {
+        text.textContent = 'Entrando...';
+        icon.style.display = 'none';
+        spinner.style.display = 'inline-block';
+        btn.disabled = true;
+    } else {
+        text.textContent = 'Entrar';
+        icon.style.display = 'inline';
+        spinner.style.display = 'none';
+        btn.disabled = false;
+    }
 }
 
 function showMessage(type, text) {
