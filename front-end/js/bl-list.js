@@ -23,7 +23,7 @@ async function loadFilters() {
         const filters = await response.json();
 
         const countrySelect = document.getElementById('filter-country');
-        filters.countries.forEach(country => {
+        filters.countries.filter(c => c !== 'Brasil').forEach(country => {
             const option = document.createElement('option');
             option.value = country;
             option.textContent = country;
