@@ -32,34 +32,41 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="country">País</label>
-                    <input type="text" id="country" name="country" placeholder="Ex: Tailândia">
+                    <input type="text" id="country" name="country" required placeholder="Ex: Tailândia">
                 </div>
 
                 <div class="form-group">
                     <label for="release_date">Data de lançamento</label>
-                    <input type="text" id="release_date" name="release_date" placeholder="YYYY-MM">
+                    <input type="date" id="release_date" name="release_date" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="genre">Gênero</label>
+                    <input type="text" id="genre" name="genre" required placeholder="Ex: Romance, Drama">
+                </div>
+
+                <div class="form-group">
+                    <label for="episode_number" class="required">Nº de Episódios</label>
+                    <input type="number" id="episode_number" name="episode_number" min="1" required placeholder="Ex: 12">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="genre">Gênero</label>
-                <input type="text" id="genre" name="genre" placeholder="Ex: Romance, Drama">
-            </div>
-
-            <div class="form-group">
                 <label for="synopsis">Sinopse</label>
-                <textarea id="synopsis" name="synopsis" rows="5" placeholder="Escreva uma breve sinopse..."></textarea>
+                <textarea id="synopsis" name="synopsis" rows="5" required placeholder="Escreva uma breve sinopse..."></textarea>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label for="platform">Plataforma</label>
-                    <input type="text" id="platform" name="platform" placeholder="Ex: GMMTV, Netflix">
+                    <input type="text" id="platform" name="platform" required placeholder="Ex: GMMTV, Netflix">
                 </div>
 
                 <div class="form-group">
                     <label for="rate">Nota</label>
-                    <input type="number" id="rate" name="rate" min="0" max="10" step="0.1" placeholder="0 - 10">
+                    <input type="number" id="rate" name="rate" min="0" max="10" step="0.1" required placeholder="0 - 10">
                 </div>
             </div>
 
@@ -82,12 +89,12 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="date_start">Data de início (assistido)</label>
-                    <input type="text" id="date_start" name="date_start" placeholder="YYYY-MM">
+                    <input type="date" id="date_start" name="date_start">
                 </div>
 
                 <div class="form-group">
                     <label for="date_watched">Data de término (assistido)</label>
-                    <input type="text" id="date_watched" name="date_watched" placeholder="YYYY-MM">
+                    <input type="date" id="date_watched" name="date_watched">
                 </div>
             </div>
 

@@ -7,12 +7,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const payload = {
             title: document.getElementById('title').value,
-            country: document.getElementById('country').value || null,
-            release_date: document.getElementById('release_date').value || null,
-            genre: document.getElementById('genre').value || null,
-            synopsis: document.getElementById('synopsis').value || null,
-            platform: document.getElementById('platform').value || null,
-            rate: document.getElementById('rate').value
+            country: document.getElementById('country').value,
+            release_date: document.getElementById('release_date').value,
+            episode_number: Number(document.getElementById('episode_number').value),
+            genre: document.getElementById('genre').value,
+            synopsis: document.getElementById('synopsis').value,
+            platform: document.getElementById('platform').value,
+            rate: document.getElementById('rate').value !== ''
                 ? Number(document.getElementById('rate').value)
                 : null,
             status: document.getElementById('status').value || null,
