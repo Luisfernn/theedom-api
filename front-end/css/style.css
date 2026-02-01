@@ -125,6 +125,12 @@ body {
     color: #8e44ad;
 }
 
+.page-footer {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
 .logout-button {
     background: none;
     border: 2px solid #e74c3c;
