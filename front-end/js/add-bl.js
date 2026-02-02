@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
             date_watched: document.getElementById('date_watched').value || null
         };
 
+        setLoading(true);
         try {
             const response = await fetch(`${API_BASE_URL}/series`, {
                 method: 'POST',
@@ -41,9 +42,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
         } catch (error) {
             alert(error.message);
+        } finally {
+            setLoading(false);
         }
     });
 });
+
+function setLoading(loading) {
+    const btn = document.querySelector('.submit-button');
+    const text = btn.querySelector('.btn-text');
+    const dots = btn.querySelector('.btn-dots');
+    btn.disabled = loading;
+    text.style.display = loading ? 'none' : 'inline';
+    dots.style.display = loading ? 'inline-flex' : 'none';
+}
 
 function showSuccessModal(blId) {
     const modal = document.getElementById('success-modal');
