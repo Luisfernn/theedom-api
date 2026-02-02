@@ -66,6 +66,7 @@ async function handleSubmit(event) {
         return;
     }
 
+    setLoading(true);
     try {
         // 1. Criar ator (backend retorna existente se nickname já existe)
         const createResponse = await fetch(`${API_BASE_URL}/actors`, {
@@ -98,7 +99,18 @@ async function handleSubmit(event) {
 
     } catch (error) {
         showMessage('error', error.message);
+    } finally {
+        setLoading(false);
     }
+}
+
+function setLoading(loading) {
+    const btn = document.querySelector('.submit-button');
+    const text = btn.querySelector('.btn-text');
+    const dots = btn.querySelector('.btn-dots');
+    btn.disabled = loading;
+    text.style.display = loading ? 'none' : 'inline';
+    dots.style.display = loading ? 'inline-flex' : 'none';
 }
 
 function showMessage(type, text) {

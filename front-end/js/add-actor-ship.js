@@ -135,6 +135,7 @@ async function handleSubmit(e) {
         return;
     }
 
+    setLoading(true);
     try {
         let successCount = 0;
         const errors = [];
@@ -168,7 +169,18 @@ async function handleSubmit(e) {
         }
     } catch (error) {
         showMessage('error', error.message);
+    } finally {
+        setLoading(false);
     }
+}
+
+function setLoading(loading) {
+    const btn = document.querySelector('.submit-button');
+    const text = btn.querySelector('.btn-text');
+    const dots = btn.querySelector('.btn-dots');
+    btn.disabled = loading;
+    text.style.display = loading ? 'none' : 'inline';
+    dots.style.display = loading ? 'inline-flex' : 'none';
 }
 
 function showMessage(type, text) {
