@@ -176,11 +176,12 @@ async function handleSubmit(e) {
 
 function setLoading(loading) {
     const btn = document.querySelector('.submit-button');
+    if (!btn) return;
+    btn.disabled = loading;
     const text = btn.querySelector('.btn-text');
     const dots = btn.querySelector('.btn-dots');
-    btn.disabled = loading;
-    text.style.display = loading ? 'none' : 'inline';
-    dots.style.display = loading ? 'inline-flex' : 'none';
+    if (text) text.style.display = loading ? 'none' : 'inline';
+    if (dots) dots.style.display = loading ? 'inline-flex' : 'none';
 }
 
 function showMessage(type, text) {
