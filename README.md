@@ -1,6 +1,6 @@
 # Theedom API
 
-API para gerenciamento de séries BL (Boys' Love).
+API para gerenciamento de séries BL.
 
 ## Tech Stack
 
