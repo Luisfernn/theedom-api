@@ -18,6 +18,7 @@ if (!blId) {
 }
 
 let shipCount = 1;
+let blCharacters = [];
 
 document.addEventListener('DOMContentLoaded', async function () {
     requireAuth();
@@ -41,11 +42,25 @@ async function loadSeriesInfo() {
         }
         const series = await response.json();
         document.getElementById('current-bl').textContent = series.title;
+
+        blCharacters = series.characters || [];
+        populateCharacterSelect(document.getElementById('character-1-1'));
+        populateCharacterSelect(document.getElementById('character-2-1'));
     } catch (error) {
         console.error('Erro ao carregar serie:', error);
         alert('Erro ao verificar BL.');
         window.location.href = 'bl-list.html';
     }
+}
+
+function populateCharacterSelect(select) {
+    select.innerHTML = '<option value="">Selecione o personagem...</option>';
+    blCharacters.forEach(character => {
+        const option = document.createElement('option');
+        option.value = character.name;
+        option.textContent = character.name;
+        select.appendChild(option);
+    });
 }
 
 function addShipSection() {
@@ -71,16 +86,22 @@ function addShipSection() {
 
         <div class="form-group">
             <label>Personagem 1</label>
-            <input type="text" id="character-1-${shipCount}" class="form-input" required>
+            <select id="character-1-${shipCount}" class="form-select" required>
+                <option value="">Selecione o personagem...</option>
+            </select>
         </div>
 
         <div class="form-group">
             <label>Personagem 2</label>
-            <input type="text" id="character-2-${shipCount}" class="form-input" required>
+            <select id="character-2-${shipCount}" class="form-select" required>
+                <option value="">Selecione o personagem...</option>
+            </select>
         </div>
     `;
 
     shipsContainer.appendChild(shipSection);
+    populateCharacterSelect(document.getElementById(`character-1-${shipCount}`));
+    populateCharacterSelect(document.getElementById(`character-2-${shipCount}`));
 }
 
 function removeShipSection(shipNumber) {

@@ -226,7 +226,26 @@ label {
     transition: all 0.3s ease;
 }
 
-.form-input:focus {
+.form-select {
+    width: 100%;
+    background: #1a1a1a;
+    border: 2px solid #3a3a3a;
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 1.1em;
+    color: #e0e0e0;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.form-select option {
+    background: #1a1a1a;
+    color: #e0e0e0;
+}
+
+.form-input:focus,
+.form-select:focus {
     outline: none;
     border-color: #4a90e2;
     box-shadow: 0 0 15px rgba(74, 144, 226, 0.2);
