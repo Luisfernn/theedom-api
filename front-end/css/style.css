@@ -29,10 +29,10 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('../images/header-bg.jpg');
+    background-image: url('../images/theepeach.jpeg');
     background-size: cover;
-    background-position: center;
-    filter: brightness(1.0);
+    background-position: center 8%;
+    filter: brightness(1.1);
     z-index: 0;
 }
 
@@ -43,7 +43,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.5) 100%);
+    background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
     z-index: 1;
 }
 
@@ -84,7 +84,7 @@ body {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
     transition: left 0.5s ease;
 }
 
